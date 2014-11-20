@@ -6,6 +6,7 @@ import java.awt.Graphics;
 public class Button extends GUIComponent{
 
 	//text stuff
+	//Testing laptop connection
 	private Text Text = new Text();
 	private int TextX = 0 ,TextY = 0,TextWidth,TextHeight;
 	private Color TextColour = Color.black;
