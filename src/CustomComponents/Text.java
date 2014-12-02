@@ -1,13 +1,24 @@
 package CustomComponents;
 
 
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class Text extends GUIComponent{
 
 
-	private String Content = null;
+	private String Content;
+	private Font coverFont;
+	 
 
+
+	public Font getCoverFont() {
+		return coverFont;
+	}
+
+	public void setCoverFont(Font coverFont) {
+		this.coverFont = coverFont;
+	}
 
 	public String getContent() {
 		return Content;
@@ -15,6 +26,7 @@ public class Text extends GUIComponent{
 	
 	public void setContent(String content){
 		Content = content;
+		System.out.println(":::::"+Content);
 	}
 
 	public void Update() {
@@ -23,9 +35,15 @@ public class Text extends GUIComponent{
 
 
 	public void Draw(Graphics g) {
-		
+		System.out.println("Drew text");
 		g.setColor(Colour);
-		g.drawString(Content, Xpos, Ypos);
+		System.out.println(Content);
+		if(Content!=null){
+			g.drawString(Content, Xpos, Ypos);
+		}else{
+			System.out.println("///"+"Content has not been properly initialized"+"\\\n ");
+			
+		}
 		
 	}
 	

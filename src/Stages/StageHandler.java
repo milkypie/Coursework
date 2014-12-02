@@ -44,8 +44,12 @@ public class StageHandler {
 		while(true){
 			//refreshes the current stage panel
 			StageArray[CurrentStage].Update();
-			Control.CardMain.TotalGUI = StageArray[CurrentStage];
-			Control.CardMain.TotalGUI.repaint();
+			/*
+			 * what should g be?
+			 * Sam says it should be the previous frame
+			 * But then where do i get the first frame?
+			 */
+			StageArray[CurrentStage].updateUI();
 			startTime = System.nanoTime();
 			while(System.nanoTime() - startTime <= RATE){
 				try{
