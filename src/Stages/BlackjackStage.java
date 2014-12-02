@@ -41,9 +41,4 @@ public class BlackjackStage extends CustomComponents.Stage{
 		
 	}
 
-	
-	public void Create() {
-		Initialize();
-	}
-
 }

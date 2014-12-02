@@ -6,12 +6,13 @@ import java.awt.Graphics;
 public class Button extends GUIComponent{
 
 	//text stuff
-	//Testing laptop connection
 	private Text Text = new Text();
-	private int TextX = 0 ,TextY = 0,TextWidth,TextHeight;
+	private int TextX = 0 ,TextY = 0,TextWidth = 80,TextHeight = 30;
 	private Color TextColour = Color.black;
 	private String Content = "";
+	private int Style = 0;
 	
+		
 	public int getTextWidth() {
 		return TextWidth;
 	}
@@ -88,19 +89,43 @@ public class Button extends GUIComponent{
 	}
 	
 	public void setText(int textx,int texty,String content){
-		this.Text.setXpos(textx);
-		this.Text.setYpos(texty);
-		this.Text.setContent(content);
+		TextX=Xpos+textx;
+		TextY = Ypos+texty;
+		Content=content;
+		Text.setXpos(textx);
+		Text.setYpos(texty);
+		Text.setContent(content);
 	}
 	
 	public void Draw(Graphics g) {
+		System.out.println("Drew Button");
 		g.setColor(Colour);
-		g.fillRect(Xpos, Ypos, width, height);
+		switch(Style){
+		case 1:
+			g.fillRoundRect(Xpos, Ypos, width, height, 10, 10);
+		break;
+		default:
+			g.fillRect(Xpos, Ypos, width, height);
+		break;
+		}
+		
 		g.setColor(TextColour);
-		this.Text.setContent(Content);
-		this.Text.setXpos(TextX);
-		this.Text.setYpos(TextY);
-		this.Text.Draw(g);
+		Text.setColour(TextColour);
+		System.out.println("::::"+Content);
+		Text.setContent(Content);
+		Text.setXpos(TextX);
+		Text.setYpos(TextY);
+		Text.Draw(g);
+	}
+
+
+	public int getStyle() {
+		return Style;
+	}
+
+
+	public void setStyle(int style) {
+		Style = style;
 	}
 
 

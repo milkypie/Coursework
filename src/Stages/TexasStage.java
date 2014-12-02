@@ -1,5 +1,6 @@
 package Stages;
 
+@SuppressWarnings("serial")
 public class TexasStage extends CustomComponents.Stage {
 	public void Prepare(){
 		
@@ -7,10 +8,7 @@ public class TexasStage extends CustomComponents.Stage {
 	public void Update(){
 		
 	}
-	public void Create(){
 		
-	}
-	
 	public void Initialize(){
 		
 	}

@@ -9,7 +9,10 @@ public abstract class GUIComponent {
 	protected Color Colour = Color.black;
 	protected boolean Active = true;
 	
-
+	public void setLocation(int X,int Y){
+		Xpos = X;
+		Ypos = Y;
+	}
 	public int getXpos() {
 		return Xpos;
 	}
