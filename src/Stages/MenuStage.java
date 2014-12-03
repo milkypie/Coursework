@@ -6,17 +6,18 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import CustomComponents.Button;
+import CustomComponents.Card;
 
 @SuppressWarnings("serial")
 public class MenuStage extends CustomComponents.Stage{
 	
 	public static Button BlackjackButton = new Button();
 	public String BlackjackContent;
+	public static Card TestCard = new Card();
 	//public Graphics2D testGraphcis = Control.CardMain.TotalGUI.
 	
 	public void Initialize(){
@@ -37,7 +38,11 @@ public class MenuStage extends CustomComponents.Stage{
 		
 		this.AddComponent(BlackjackButton);
 		
+		TestCard.setFrontFacing(true);
+		TestCard.setLocation(200, 200);
+		TestCard.DealThis();
 		
+		this.AddComponent(TestCard);		
 		
 	}
 	

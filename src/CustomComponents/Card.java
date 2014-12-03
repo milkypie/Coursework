@@ -10,6 +10,7 @@ public class Card extends GUIComponent{
 	private Image Face;
 	public int Value,Suit;
 	public boolean FrontFacing = true;
+	
 		
 	
 	public int getValue() {
@@ -29,12 +30,14 @@ public class Card extends GUIComponent{
 	}
 
 	public void DealThis(){
-		 int tempValue = (int) Math.round(Math.random()*14) ;
-		 int tempSuit = (int) Math.round(Math.random()*5);
-		 if(tempValue==14){
+		 width = 136;
+		 height=222;
+		 int tempValue = (int) Math.round(Math.random()*13) ;
+		 int tempSuit = (int) Math.round(Math.random()*4);
+		 if(tempValue==13){
 			 tempValue = 0;
 		 }
-		 if(tempSuit==5){
+		 if(tempSuit==4){
 			 tempSuit=0;
 		 }
 		 while(Control.CardMain.CardOut[tempSuit][tempValue]){

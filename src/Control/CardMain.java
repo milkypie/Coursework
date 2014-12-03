@@ -5,6 +5,7 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -28,6 +29,7 @@ public class CardMain{
 	public static BaseJpanel Menu_Button_Base = new BaseJpanel();
 	public static JButton BlackJackButton = new JButton(),CheatButton = new JButton(),TexasButton = new JButton();
 	public static Image[][] Faces = new Image[4][13];
+	private static File ResourceDir = new File("C:\\Users\\James\\git\\Coursework\\Resources");
 	
 	
 	
@@ -59,6 +61,20 @@ public class CardMain{
 			for(y=0;y<13;y++){
 				CardOut[x][y] = false;
 			}
+		}
+		
+		//finds card faces
+		//these are currently just placeholder
+		try {
+			for(x=1;x<14;x++){
+				Faces[0][x-1] = ImageIO.read(new File(ResourceDir+"\\"+String.valueOf(x)+".jpg"));
+				Faces[1][0] = Faces[0][x-1];
+				Faces[2][0] = Faces[0][x-1];
+				Faces[3][0] = Faces[0][x-1];
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		StageHandler.Initialize();
