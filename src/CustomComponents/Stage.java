@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import Control.CardMain;
 import Visuals.BaseJpanel;
 
 @SuppressWarnings("serial")
@@ -21,6 +22,7 @@ public abstract class Stage extends JPanel{
 	public void paintComponent(Graphics g){
 		g.setColor(Color.white);
 		g.fillRect(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width,Toolkit.getDefaultToolkit().getScreenSize().height);
+		
 		if(Components!=null){		
 			for(GUIComponent x: Components){
 				x.Update();

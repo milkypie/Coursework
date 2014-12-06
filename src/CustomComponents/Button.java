@@ -98,7 +98,6 @@ public class Button extends GUIComponent{
 	}
 	
 	public void Draw(Graphics g) {
-		System.out.println("Drew Button");
 		g.setColor(Colour);
 		switch(Style){
 		case 1:
@@ -111,7 +110,6 @@ public class Button extends GUIComponent{
 		
 		g.setColor(TextColour);
 		Text.setColour(TextColour);
-		System.out.println("::::"+Content);
 		Text.setContent(Content);
 		Text.setXpos(TextX);
 		Text.setYpos(TextY);

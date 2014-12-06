@@ -29,7 +29,7 @@ public class CardMain{
 	public static BaseJpanel Menu_Button_Base = new BaseJpanel();
 	public static JButton BlackJackButton = new JButton(),CheatButton = new JButton(),TexasButton = new JButton();
 	public static Image[][] Faces = new Image[4][13];
-	private static File ResourceDir = new File("C:\\Users\\James\\git\\Coursework\\Resources");
+	private static File ResourceDir = new File(System.getProperty("user.home")+"\\git\\Coursework\\Resources");
 	
 	
 	
@@ -56,7 +56,8 @@ public class CardMain{
 	public static void main(String[] args){
 		//schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI
-		int x,y;
+		int x=0;
+		int y=0;
 		for(x=0;x<4;x++){
 			for(y=0;y<13;y++){
 				CardOut[x][y] = false;
@@ -64,16 +65,16 @@ public class CardMain{
 		}
 		
 		//finds card faces
-		//these are currently just placeholder
 		try {
-			for(x=1;x<14;x++){
-				Faces[0][x-1] = ImageIO.read(new File(ResourceDir+"\\"+String.valueOf(x)+".jpg"));
-				Faces[1][0] = Faces[0][x-1];
-				Faces[2][0] = Faces[0][x-1];
-				Faces[3][0] = Faces[0][x-1];
+			for(y=0;y<4;y++){
+				for(x=1;x<14;x++){
+					Faces[y][x-1] = ImageIO.read(new File(ResourceDir+"\\"+String.valueOf(y)+String.valueOf(x)+".png"));
+				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.out.println(String.valueOf(y));
+			System.out.println(String.valueOf(x));
 			e.printStackTrace();
 		}
 		
