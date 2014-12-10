@@ -66,12 +66,13 @@ public class CardMain{
 		//finds card faces
 		//these are currently just placeholder
 		try {
-			for(x=1;x<14;x++){
-				Faces[0][x-1] = ImageIO.read(new File(ResourceDir+"\\"+String.valueOf(x)+".jpg"));
-				Faces[1][0] = Faces[0][x-1];
-				Faces[2][0] = Faces[0][x-1];
-				Faces[3][0] = Faces[0][x-1];
+			for (y=0;y<4;y++){
+				for(x=1;x<14;x++){
+					Faces[y][x-1] = ImageIO.read(new File(ResourceDir+"\\"+String.valueOf(y)+String.valueOf(x)+".png"));
+					
+				}
 			}
+			System.out.println("found all images");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
