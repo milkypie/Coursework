@@ -78,11 +78,10 @@ public class CardMain{
 			System.out.println(String.valueOf(x));
 			e.printStackTrace();
 		}
-		
-		StageHandler.Initialize();
+		StageHandler GameLoop = new StageHandler();
 		createAndShowGUI();
-		StageHandler.Timer();
-		
+		GameLoop.Start();
+
 
 	}
 	public JPanel CreateContentPane(){
