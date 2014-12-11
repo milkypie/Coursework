@@ -26,11 +26,8 @@ public class StageHandler {
 		StageArray[STAGE_BLACKJACK] = new BlackjackStage();
 		StageArray[STAGE_TEXAS] = new TexasStage();
 		StageArray[STAGE_CHEAT] = new CheatStage();
+
 		
-		StageArray[STAGE_MENU].Initialize();
-		StageArray[STAGE_BLACKJACK].Initialize();
-		StageArray[STAGE_TEXAS].Initialize();
-		StageArray[STAGE_CHEAT].Initialize();
 		
 		StageArray[STAGE_MENU].Prepare();
 		

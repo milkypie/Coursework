@@ -71,6 +71,7 @@ public class CardMain{
 					Faces[y][x-1] = ImageIO.read(new File(ResourceDir+"\\"+String.valueOf(y)+String.valueOf(x)+".png"));
 				}
 			}
+			System.out.println("found all images");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(String.valueOf(y));

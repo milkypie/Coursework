@@ -2,16 +2,32 @@ package CustomComponents;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class Button extends GUIComponent{
+public class Button extends GUIComponent implements MouseListener{
 
 	//text stuff
+	public Action action;
 	private Text Text = new Text();
 	private int TextX = 0 ,TextY = 0,TextWidth = 80,TextHeight = 30;
 	private Color TextColour = Color.black;
 	private String Content = "";
 	private int Style = 0;
 	
+	public Button(){
+		
+	}
+	
+	public void setAction(Action newAction){
+		action = newAction;
+	}
+	
+	public void runAction(){
+		if(action!=null){
+			
+		}
+	}
 		
 	public int getTextWidth() {
 		return TextWidth;
@@ -129,6 +145,41 @@ public class Button extends GUIComponent{
 
 	@Override
 	public void Update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

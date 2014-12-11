@@ -8,8 +8,9 @@ public class TexasStage extends CustomComponents.Stage {
 	public void Update(){
 		
 	}
-		
-	public void Initialize(){
+	@Override
+	public void run(int actionID) {
+		// TODO Auto-generated method stub
 		
 	}
 }

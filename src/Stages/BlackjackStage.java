@@ -36,8 +36,11 @@ public class BlackjackStage extends CustomComponents.Stage{
 	public void Update() {
 		Prepare();
 	}
-	
-	public  void Initialize(){
+
+
+	@Override
+	public void run(int actionID) {
+		// TODO Auto-generated method stub
 		
 	}
 

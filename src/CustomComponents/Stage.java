@@ -33,7 +33,9 @@ public abstract class Stage extends JPanel{
 	
 	public abstract void Prepare();
 	
+	public abstract void run(int actionID);
+	
 	public abstract void Update();
-		
-	public abstract void Initialize();
+
+
 }
