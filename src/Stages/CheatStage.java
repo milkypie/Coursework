@@ -4,12 +4,14 @@ package Stages;
 public class CheatStage extends CustomComponents.Stage{
 	public void Prepare() {
 	}
-
-	public void Update(){
+	
+	public void run(int actionID) {
+		
 		
 	}
-	
-	public void Initialize(){
+
+	public void Update() {
+		
 		
 	}
 }
