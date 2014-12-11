@@ -5,7 +5,8 @@ import java.awt.Graphics;
 
 public abstract class GUIComponent {
 	
-	protected int Xpos = 0,Ypos = 0,width = 80,height = 30;
+	protected int Xpos = 0,Ypos = 0,width = 80,height = 30,ActionID;
+	protected Action action;
 	protected Color Colour = Color.black;
 	protected boolean Active = true;
 	

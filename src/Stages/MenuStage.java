@@ -6,9 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import CustomComponents.Action;
 import CustomComponents.Button;
 import CustomComponents.Card;
 
@@ -20,13 +24,12 @@ public class MenuStage extends CustomComponents.Stage{
 	public static Card TestCard = new Card();
 	//public Graphics2D testGraphcis = Control.CardMain.TotalGUI.
 	
-	public void Initialize(){
-		//Declare all variables, create JPanel & JButtons
+	public MenuStage(){
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		this.setBackground(Color.blue);
 		this.setLayout(null);
 		
-		BlackjackContent = "test";
+		BlackjackContent = "BlackJack";
 		
 		BlackjackButton.setColour(Color.black);
 		BlackjackButton.setTextColour(Color.RED);
@@ -35,14 +38,25 @@ public class MenuStage extends CustomComponents.Stage{
 		BlackjackButton.setHeight(50);
 		BlackjackButton.setStyle(1);
 		BlackjackButton.setText(20, 30, BlackjackContent);
+		BlackjackButton.setAction(new Action(){
+
+			
+			public void run(int ActionID) {
+				//change to blackjack stage
+				
+			}
+			
+		});
+
+		
 		
 		this.AddComponent(BlackjackButton);
+				
 		
-		TestCard.setFrontFacing(true);
-		TestCard.setLocation(200, 200);
-		TestCard.DealThis();
-		
-		this.AddComponent(TestCard);		
+	}
+	
+	public void Initialize(){
+		//Declare all variables, create JPanel & JButtons
 		
 	}
 	
@@ -58,7 +72,9 @@ public class MenuStage extends CustomComponents.Stage{
 		
 	}
 
-	
+	public void run(int ActionID){
+		
+	}
 	
 	
 }
