@@ -17,7 +17,7 @@ import CustomComponents.Button;
 import CustomComponents.Card;
 
 @SuppressWarnings("serial")
-public class MenuStage extends CustomComponents.Stage{
+public class MenuStage extends CustomComponents.Stage {
 	
 	public static Button[] buttons = new Button[4];
 	public String BlackjackContent,TexasContent,CheatContent,ExitContent;
@@ -45,8 +45,9 @@ public class MenuStage extends CustomComponents.Stage{
 		buttons[0].setAction(new Action(){
 			
 			
-			public void run(int ActionID) {
+			public void run() {
 				//change to blackjack stage
+				System.out.println("blackjackbuton pressed");
 				
 			}
 			
@@ -76,10 +77,23 @@ public class MenuStage extends CustomComponents.Stage{
 	public void Draw(Graphics g){
 		
 	}
-
-	public void run(int ActionID){
-		
+	
+	public void MousePressed(MouseEvent MouseArg) {
+		System.out.println("mouse event passed on");
+		int i;
+		for(i=0;i<4;i++){
+			//if event took place inside x
+			if(MouseArg.getLocationOnScreen().x>buttons[i].getXpos()&&MouseArg.getLocationOnScreen().x<buttons[i].getXpos()+buttons[i].getWidth()){
+				//if event took place inside y
+				if(MouseArg.getLocationOnScreen().y>buttons[i].getYpos()&&MouseArg.getLocationOnScreen().y<buttons[i].getYpos()+buttons[i].getHeight()){
+					//execute action
+					System.out.println("Button:"+i+" will execute its action");
+					buttons[i].runAction();
+				}
+			}
+		}
 	}
+
 	
 	
 }

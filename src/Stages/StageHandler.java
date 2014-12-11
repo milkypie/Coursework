@@ -54,6 +54,9 @@ public class StageHandler implements Runnable {
 			//refreshes the current stage panel
 			StageArray[CurrentStage].Update();
 			StageArray[CurrentStage].updateUI();
+			//uncomment these once the exit button works
+			//CardMain.TotalGUI = StageArray[CurrentStage];
+			//CardMain.frame.setContentPane(CardMain.demo.CreateContentPane());
 			startTime = System.nanoTime();
 			while(System.nanoTime() - startTime <= RATE){
 				try{

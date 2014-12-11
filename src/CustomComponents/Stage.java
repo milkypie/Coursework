@@ -3,6 +3,7 @@ package CustomComponents;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -33,7 +34,7 @@ public abstract class Stage extends JPanel{
 	
 	public abstract void Prepare();
 	
-	public abstract void run(int actionID);
+	public abstract void MousePressed(MouseEvent MouseArg);
 	
 	public abstract void Update();
 

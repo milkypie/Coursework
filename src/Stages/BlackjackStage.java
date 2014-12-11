@@ -1,6 +1,7 @@
 package Stages;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
@@ -38,8 +39,11 @@ public class BlackjackStage extends CustomComponents.Stage{
 	}
 
 
+	
+
+
 	@Override
-	public void run(int actionID) {
+	public void MousePressed(MouseEvent MouseArg) {
 		// TODO Auto-generated method stub
 		
 	}

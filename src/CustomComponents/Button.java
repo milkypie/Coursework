@@ -25,7 +25,7 @@ public class Button extends GUIComponent implements MouseListener{
 	
 	public void runAction(){
 		if(action!=null){
-			
+			action.run();
 		}
 	}
 		

@@ -15,13 +15,20 @@ import Stages.StageHandler;
 import Visuals.BaseJpanel;
 import Visuals.FrameHandler;
 import Cards.CardCreation;
+import Input.MouseInput;
 
+/*
+ * TODO
+ * finish button usage
+ * investigate weather stage will chage as is or if the suggest uncomment in the game loop is required
+ */
 
 public class CardMain{
 	static Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static int ScreenWidth = ScreenSize.width ;
+	public static MouseInput MouseHandler = new MouseInput();
 	public static int ScreenHeight = ScreenSize.height;
-	public static JPanel TotalGUI = new JPanel();
+	public static JPanel TotalGUI = new JPanel(),MousePanel = new JPanel();
 	public static Boolean[][] CardOut = new Boolean[4][13];
 	public FrameHandler[] Hand = new FrameHandler[30];
 	static final int DiamondID = 0, SpadeID = 1, HeartID = 2, ClubID = 3;
@@ -35,21 +42,23 @@ public class CardMain{
 	
 	private static void createAndShowGUI() {
 		JFrame.setDefaultLookAndFeelDecorated(true); //this needs to be false on release
-		JFrame frame = new JFrame ("[=] Do A Card [=]");
+		JFrame frame = new JFrame ("[=] Do A Card [=]"); //once there is a way of closing the window, make this a public variable
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		frame.setUndecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(ScreenWidth,ScreenHeight);
 		frame.setVisible(true);
 		frame.setResizable(false);
-		
+		CardMain demo = new CardMain();	
 		//create and set up the content pane
-		CardMain demo = new CardMain();
+		
 		frame.setContentPane(demo.CreateContentPane());
 		//add this to frame loop?
 		TotalGUI.setVisible(true);
 		TotalGUI.setOpaque(true);
 		TotalGUI.repaint();
+		TotalGUI.addMouseListener(MouseHandler);
+		
 		
 	}
 	
@@ -73,7 +82,6 @@ public class CardMain{
 			}
 			System.out.println("found all images");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println(String.valueOf(y));
 			System.out.println(String.valueOf(x));
 			e.printStackTrace();
