@@ -53,6 +53,7 @@ public class StageHandler implements Runnable {
 		while(true){
 			//refreshes the current stage panel
 			StageArray[CurrentStage].Update();
+			//updateUI will activate the Draw function
 			StageArray[CurrentStage].updateUI();
 			//uncomment these once the exit button works
 			//CardMain.TotalGUI = StageArray[CurrentStage];

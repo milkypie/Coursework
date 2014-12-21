@@ -14,13 +14,13 @@ import javax.swing.*;
 import Stages.StageHandler;
 import Visuals.BaseJpanel;
 import Visuals.FrameHandler;
-import Cards.CardCreation;
 import Input.MouseInput;
 
 /*
  * TODO
- * finish button usage
- * investigate weather stage will chage as is or if the suggest uncomment in the game loop is required
+ * Find out why the stage doesn't change
+ * fix why the stage doesn't change
+ * 
  */
 
 public class CardMain{
@@ -36,12 +36,12 @@ public class CardMain{
 	public static BaseJpanel Menu_Button_Base = new BaseJpanel();
 	public static JButton BlackJackButton = new JButton(),CheatButton = new JButton(),TexasButton = new JButton();
 	public static Image[][] Faces = new Image[4][13];
-	private static File ResourceDir = new File(System.getProperty("user.home")+"\\git\\Coursework\\Resources");
-	
+	public static File ResourceDir = new File(System.getProperty("user.home")+"\\git\\Coursework\\Resources");
+	public static StageHandler GameLoop = new StageHandler();
 	
 	
 	private static void createAndShowGUI() {
-		JFrame.setDefaultLookAndFeelDecorated(true); //this needs to be false on release
+		JFrame.setDefaultLookAndFeelDecorated(false); //this needs to be false on release
 		JFrame frame = new JFrame ("[=] Do A Card [=]"); //once there is a way of closing the window, make this a public variable
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		frame.setUndecorated(true);
@@ -86,7 +86,6 @@ public class CardMain{
 			System.out.println(String.valueOf(x));
 			e.printStackTrace();
 		}
-		StageHandler GameLoop = new StageHandler();
 		createAndShowGUI();
 		GameLoop.Start();
 
@@ -94,7 +93,7 @@ public class CardMain{
 	}
 	public JPanel CreateContentPane(){
 		
-		TotalGUI = StageHandler.StageArray[StageHandler.CurrentStage];
+		TotalGUI = StageHandler.StageArray[StageHandler.STAGE_MENU];
 		
 		return TotalGUI;
 	}

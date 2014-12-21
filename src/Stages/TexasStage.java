@@ -4,6 +4,9 @@ import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class TexasStage extends CustomComponents.Stage {
+	public TexasStage(){
+		ID=2;
+	}
 	public void Prepare(){
 		
 	}

@@ -15,6 +15,7 @@ import Visuals.BaseJpanel;
 public abstract class Stage extends JPanel{
 	
 	private ArrayList<GUIComponent> Components = new ArrayList<GUIComponent>();
+	protected int  ID;
 	
 	public void AddComponent(GUIComponent C){
 		Components.add(C);
