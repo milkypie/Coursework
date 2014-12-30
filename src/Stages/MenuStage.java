@@ -28,8 +28,9 @@ public class MenuStage extends CustomComponents.Stage {
 	public String BlackjackContent,TexasContent,CheatContent,ExitContent;
 	public static Card TestCard = new Card();
 	public Image backgroundImage;
-	public Background testbackground;
+	public Background MenuBackground;
 	public int blue,green,looping;
+	public boolean UseImage = false;
 	//public Graphics2D testGraphcis = Control.CardMain.TotalGUI.
 	
 	public MenuStage(){
@@ -41,20 +42,20 @@ public class MenuStage extends CustomComponents.Stage {
 		this.setBackground(Color.blue);
 		this.setLayout(null);
 		
-		
-		try {
-			backgroundImage = ImageIO.read(new File(Control.CardMain.ResourceDir+"\\Background.jpg"));
-			System.out.println("found backgroundimage");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(UseImage){
+			try {
+				backgroundImage = ImageIO.read(new File(Control.CardMain.ResourceDir+"\\Background.jpg"));
+				System.out.println("found backgroundimage");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+			}
 		}
+		MenuBackground = new Background(backgroundImage);
+		MenuBackground.setColour(new Color(0,green,blue));
 		
-		testbackground = new Background(null);
-		testbackground.RenderWithImage = false;
-		testbackground.setColour(new Color(0,green,blue));
-		
-		this.AddComponent(testbackground);
+		this.AddComponent(MenuBackground);
 		
 		int i;
 		for(i=0;i<4;i++){
@@ -206,7 +207,7 @@ public class MenuStage extends CustomComponents.Stage {
 		}
 			
 
-		testbackground.setColour(new Color(0,green,blue));
+		MenuBackground.setColour(new Color(0,green,blue));
 	}
 	public void Draw(Graphics g){
 		

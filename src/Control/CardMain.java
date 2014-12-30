@@ -18,8 +18,33 @@ import Input.MouseInput;
 
 /*
  * TODO
- * Find out why the stage doesn't change
- * fix why the stage doesn't change
+ * Find out why the stage doesn't change (possibly fixed) [fixed]
+ * 
+ * fix why the stage doesn't change (possibly fixed) [fixed]
+ * 
+ * the possible fix for the previous problem has created a new problem
+ * i believe the new problem is created by totalGUI not having a mouse listener
+ * this could be rectified by creating a previous stage or next stage variable
+ * then only refreshing totalGUI when the two differ (wrong)
+ * 
+ * [Fixed] by removing TotalGUI from the update sequence and simply calling setContentPane() on the base frame and using a
+ * value in Stage array to pass through 
+ * 
+ * BlackJack:
+ * 
+ * BASIC:
+ * -Build Stage
+ * -Initial Deal
+ * 
+ * FUNCTONS:
+ * -Hit
+ * -Stick
+ * -Split
+ * -Re-Deal
+ * 
+ * ALGORITHMS:
+ * -AI
+ * -Win/lose
  * 
  */
 
@@ -38,11 +63,11 @@ public class CardMain{
 	public static Image[][] Faces = new Image[4][13];
 	public static File ResourceDir = new File(System.getProperty("user.home")+"\\git\\Coursework\\Resources");
 	public static StageHandler GameLoop = new StageHandler();
-	
+	public static JFrame frame = new JFrame("[=] do a card[=]");
+	public static boolean testing = true; //needs to be false when released
 	
 	private static void createAndShowGUI() {
-		JFrame.setDefaultLookAndFeelDecorated(false); //this needs to be false on release
-		JFrame frame = new JFrame ("[=] Do A Card [=]"); //once there is a way of closing the window, make this a public variable
+		frame.setDefaultLookAndFeelDecorated(false); //this needs to be false on release
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		frame.setUndecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,6 +90,10 @@ public class CardMain{
 	public static void main(String[] args){
 		//schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI
+		if(testing){
+			System.out.println("Testing active");
+		}
+		
 		int x=0;
 		int y=0;
 		for(x=0;x<4;x++){
@@ -80,7 +109,9 @@ public class CardMain{
 					Faces[y][x-1] = ImageIO.read(new File(ResourceDir+"\\"+String.valueOf(y)+String.valueOf(x)+".png"));
 				}
 			}
-			System.out.println("found all images");
+			if(testing){
+				System.out.println("found all images");
+			}
 		} catch (IOException e) {
 			System.out.println(String.valueOf(y));
 			System.out.println(String.valueOf(x));

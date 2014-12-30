@@ -9,7 +9,11 @@ public class Background extends GUIComponent{
 	public Boolean RenderWithImage = true;
 	
 	public Background(Image initialImage){
-		backgroundImage = initialImage;
+		if(initialImage!=null){
+			backgroundImage = initialImage;
+		}else{
+			RenderWithImage = false;
+		}
 	}
 	
 	public Boolean getRenderWithImage() {
@@ -42,7 +46,6 @@ public class Background extends GUIComponent{
 				System.out.println("backgroundImage is not properly defined");
 			}
 		}else{
-			System.out.println("Drawing background base");
 			g.setColor(Colour);
 			g.fillRect(0, 0, Control.CardMain.ScreenWidth, Control.CardMain.ScreenHeight);
 			

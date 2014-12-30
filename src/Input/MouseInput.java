@@ -9,7 +9,9 @@ public class MouseInput implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
+		if(Control.CardMain.testing){
+			System.out.println("Mouse Click Detected");
+		}
 		StageHandler.StageArray[StageHandler.CurrentStage].MousePressed(e);
 		
 	}

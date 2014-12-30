@@ -18,6 +18,8 @@ public class StageHandler implements Runnable {
 	public static final int STAGE_TEXAS = 2;
 	public static final int STAGE_CHEAT = 3;
 	public static int CurrentStage = 0;
+	private JPanel CurrentView, NextView;
+	private Boolean View;
 	private Thread GameThread;
 	
 	public static CustomComponents.Stage[] StageArray = new CustomComponents.Stage[4];
@@ -30,9 +32,10 @@ public class StageHandler implements Runnable {
 		StageArray[STAGE_TEXAS] = new TexasStage();
 		StageArray[STAGE_CHEAT] = new CheatStage();
 
-		
-		
-		StageArray[STAGE_MENU].Prepare();
+		StageArray[STAGE_MENU].addMouseListener(CardMain.MouseHandler);
+		StageArray[STAGE_BLACKJACK].addMouseListener(CardMain.MouseHandler);
+		StageArray[STAGE_TEXAS].addMouseListener(CardMain.MouseHandler);
+		StageArray[STAGE_CHEAT].addMouseListener(CardMain.MouseHandler);
 		
 		System.out.println("created stagehandler");
 	}
@@ -55,9 +58,11 @@ public class StageHandler implements Runnable {
 			StageArray[CurrentStage].Update();
 			//updateUI will activate the Draw function
 			StageArray[CurrentStage].updateUI();
-			//uncomment these once the exit button works
-			//CardMain.TotalGUI = StageArray[CurrentStage];
-			//CardMain.frame.setContentPane(CardMain.demo.CreateContentPane());
+			//this completely refreshes totalGUI and removes and mouse listener it had
+			//TODO
+			if(CardMain.frame.getContentPane()!=StageArray[CurrentStage]){
+				CardMain.frame.setContentPane(StageArray[CurrentStage]);
+			}
 			startTime = System.nanoTime();
 			while(System.nanoTime() - startTime <= RATE){
 				try{
