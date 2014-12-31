@@ -54,6 +54,7 @@ public class StageHandler implements Runnable {
 		final int RATE = (1000/REFRESH_RATE)*1000000;
 		
 		while(true){
+			startTime = System.nanoTime();
 			//refreshes the current stage panel
 			StageArray[CurrentStage].Update();
 			//updateUI will activate the Draw function
@@ -63,7 +64,7 @@ public class StageHandler implements Runnable {
 			if(CardMain.frame.getContentPane()!=StageArray[CurrentStage]){
 				CardMain.frame.setContentPane(StageArray[CurrentStage]);
 			}
-			startTime = System.nanoTime();
+			
 			while(System.nanoTime() - startTime <= RATE){
 				try{
 					//Can change the number to a higher number as it may improve performance
