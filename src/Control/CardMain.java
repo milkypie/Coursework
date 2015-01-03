@@ -49,6 +49,7 @@ import Input.MouseInput;
  */
 
 public class CardMain{
+	public static boolean testing = true; //needs to be false when released
 	static Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static int ScreenWidth = ScreenSize.width ;
 	public static MouseInput MouseHandler = new MouseInput();
@@ -64,7 +65,6 @@ public class CardMain{
 	public static File ResourceDir = new File(System.getProperty("user.home")+"\\git\\Coursework\\Resources");
 	public static StageHandler GameLoop = new StageHandler();
 	public static JFrame frame = new JFrame("[=] do a card[=]");
-	public static boolean testing = true; //needs to be false when released
 	
 	private static void createAndShowGUI() {
 		frame.setDefaultLookAndFeelDecorated(false); //this needs to be false on release

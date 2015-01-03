@@ -11,12 +11,14 @@ public class Button extends GUIComponent implements MouseListener{
 	public Action action;
 	private Text Text = new Text();
 	private int TextX = 0 ,TextY = 0,TextWidth = 80,TextHeight = 30;
-	private Color TextColour = Color.black;
+	private Color TextColour = Color.RED;
 	private String Content = "";
-	private int Style = 0;
+	private int Style = 1;
 	
 	public Button(){
-		
+		this.width = 100;
+		this.height = 50;
+		this.Colour = Color.BLACK;
 	}
 	
 	public void setAction(Action newAction){

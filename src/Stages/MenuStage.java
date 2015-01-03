@@ -26,7 +26,6 @@ public class MenuStage extends CustomComponents.Stage {
 	
 	public static Button[] buttons = new Button[4];
 	public String BlackjackContent,TexasContent,CheatContent,ExitContent;
-	public static Card TestCard = new Card();
 	public Image backgroundImage;
 	public Background MenuBackground;
 	public int blue,green,looping;
