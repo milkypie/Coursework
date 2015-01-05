@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class BlackjackStage extends CustomComponents.Stage{
 	
+	public Text WinnerText = new Text();
 	public Button[] Buttons = new Button[7];
 	public int[] Colours = new int[3];
 	public String[] contents = new String[3];
@@ -98,11 +99,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 				 * TODO
 				 * Add AI algorithm
 				 */
-				
-				for(int x=0;x<5;x++){
-					AIHand[x].setLocation(AIHand[x].getXpos(), AIHand[x].getYpos()+50);
-					AIHand[x].setFrontFacing(true);
-				}
+				DecideWhoWins();
 				
 				System.out.println("Stick");
 				
@@ -157,6 +154,78 @@ public class BlackjackStage extends CustomComponents.Stage{
 
 	public void DisplayItem(GUIComponent x){
 		this.AddComponent(x);
+	}
+	
+	public void DecideWhoWins(){
+		int AIScore = ScoreHand(AIHand);
+		int UserScore = ScoreHand(UserHand);
+		WinnerText.setLocation(400, 400);
+		WinnerText.setWidth(100);
+		WinnerText.setHeight(50);
+		WinnerText.setColour(Color.RED);
+		for(int x=0;x<5;x++){
+			AIHand[x].setLocation(AIHand[x].getXpos(), AIHand[x].getYpos()+50);
+			AIHand[x].setFrontFacing(true);
+		}
+		if(AIScore>21){
+			AIScore=0;
+		}
+		if(UserScore>21){
+			UserScore=0;
+		}
+		if(AIScore>UserScore){
+			//lose
+			WinnerText.setContent("You lose");
+		}else if(UserScore>AIScore){
+			//win
+			WinnerText.setColour(Color.BLUE);
+			WinnerText.setContent("You Win");
+		}else {
+			//draw
+			WinnerText.setColour(Color.BLUE);
+			WinnerText.setContent("You Draw");
+		}
+		DisplayItem(WinnerText);
+	}
+	public int ScoreHand(Card[] Hand){
+		int Score=0;
+		int Aces =0;
+		for(int x=0;x<Hand.length;x++){
+			//-1 is the default value for undealt cards
+			if(Hand[x].getValue()!=-1){
+				switch(Hand[x].getValue()){
+				case 0:
+					//Ace
+					Score=Score+11;
+					Aces++;
+				break;
+				case 10:
+					//Jack
+					Score = Score+10;				
+				break;
+				case 11:
+					//Queen
+					Score=Score+10;
+				break;
+				case 12:
+					//King
+					Score=Score+10;
+				break;
+				default:
+					Score = Score + Hand[x].getValue()+1;
+				break;
+				}
+			}
+		}
+		while(Aces!=0){
+			if(Score>21){
+				Score = Score-10;
+				Aces--;
+			}
+		}
+		
+		
+		return Score;
 	}
 
 	

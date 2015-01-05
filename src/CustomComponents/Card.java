@@ -17,6 +17,7 @@ public class Card extends GUIComponent{
 	public Card(){
 		this.setWidth(100);
 		this.setHeight(500);
+		Value = -1;
 	}
 		
 	
