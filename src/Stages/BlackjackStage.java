@@ -23,6 +23,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 	public Background BJBackground = new Background(null);
 	public Color BackgroundColour = new Color(0,114,0);
 	private int NextUserCard;
+	public boolean UserHadSplit = false,AIHasSplit = false;
 	public BlackjackStage(){
 		ID = 1;
 		
@@ -95,10 +96,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 
 			@Override
 			public void run() {
-				/*
-				 * TODO
-				 * Add AI algorithm
-				 */
+				AIPlay();
 				DecideWhoWins();
 				
 				System.out.println("Stick");
@@ -110,12 +108,12 @@ public class BlackjackStage extends CustomComponents.Stage{
 		this.AddComponent(Buttons[1]);
 		
 		Buttons[2].setLocation(400,698);
-		Buttons[2].setText(10,30,"Fold");
+		Buttons[2].setText(10,30,"Split");
 		Buttons[2].setAction(new Action(){
 
 			@Override
 			public void run() {
-				System.out.println("Fold");
+				System.out.println("Split");
 				
 			}
 			
@@ -154,6 +152,17 @@ public class BlackjackStage extends CustomComponents.Stage{
 
 	public void DisplayItem(GUIComponent x){
 		this.AddComponent(x);
+	}
+	public void AIPlay(){
+		int x=0;
+		while(ScoreHand(AIHand)<16){
+			while(AIHand[x].Value!=-1){
+				x++;
+			}
+			AIHand[x].DealThis();
+			AIHand[x].setLocation(613 + ((x-1)*113), 50);
+			DisplayItem(AIHand[x]);
+		}
 	}
 	
 	public void DecideWhoWins(){
