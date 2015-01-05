@@ -14,6 +14,10 @@ public class Card extends GUIComponent{
 	public int Value,Suit;
 	public boolean FrontFacing = true;
 	
+	public Card(){
+		this.setWidth(100);
+		this.setHeight(500);
+	}
 		
 	
 	public int getValue() {
@@ -43,36 +47,36 @@ public class Card extends GUIComponent{
 		 if(tempSuit==4){
 			 tempSuit=0;
 		 }
+
 		 while(Control.CardMain.CardOut[tempSuit][tempValue]){
-			 tempValue = (int) Math.round(Math.random()*14) ;
-			 tempSuit = (int) Math.round(Math.random()*5);
-			 if(tempValue==14){
+			 tempValue = (int) Math.round(Math.random()*13) ;
+			 tempSuit = (int) Math.round(Math.random()*4);
+			 if(tempValue==13){
 				 tempValue = 0;
 			 }
-			 if(tempSuit==5){
+			 if(tempSuit==4){
 				 tempSuit=0;
 			 }
 		 }
 		 Value = tempValue;
 		 Suit = tempSuit;
-		 //testing force result
+		 //set the picture for display
 		 Face = Control.CardMain.Faces[Suit][Value];
+		 Control.CardMain.CardOut[Suit][Value] = true;
 	}
 	
 	@Override
 	public void Draw(Graphics g) {
 		// x,y,width,height,arcwidth,archeight
-		//10 is an untested number, might need to be re-calibrated
 		
-		//creates card border
-		g.setColor(Color.blue);
-		g.fillRoundRect(Xpos, Ypos, width, height, 10, 10);
-		//creates card backing
-		g.setColor(Color.white);
-		g.fillRoundRect(Xpos+2, Ypos+2, width-4, height-4, 8, 8);
 		//creates card image
 		g.setColor(null);
-		g.drawImage(Face, Xpos+4, Ypos+4, null);
+		if(FrontFacing){	
+			g.drawImage(Face, Xpos, Ypos, null);	
+		}else{
+			g.drawImage(Control.CardMain.Back, Xpos, Ypos, null);
+		}
+		
 	}
 
 	@Override

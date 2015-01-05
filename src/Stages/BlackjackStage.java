@@ -6,6 +6,7 @@ import CustomComponents.*;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JPanel;
 
@@ -16,17 +17,48 @@ public class BlackjackStage extends CustomComponents.Stage{
 	public Button[] Buttons = new Button[7];
 	public int[] Colours = new int[3];
 	public String[] contents = new String[3];
+	public Card[] UserHand = new Card[5];
+	public Card[] AIHand = new Card[5];
 	public Background BJBackground = new Background(null);
 	public Color BackgroundColour = new Color(0,114,0);
+	private int NextUserCard;
 	public BlackjackStage(){
 		ID = 1;
 		
 		BJBackground.setColour(BackgroundColour);
 		this.AddComponent(BJBackground);
-		System.out.print("testing is:");
-		System.out.println(CardMain.testing);
+		
+		
 		int x;
-			
+		
+		for(x=0;x<5;x++){
+			AIHand[x] = new Card();
+			UserHand[x] = new Card();
+			AIHand[x].setFrontFacing(false);
+			if(x>1){
+				UserHand[x].setActive(false);
+				AIHand[x].setActive(false);
+			}else{
+				UserHand[x].DealThis();
+				AIHand[x].DealThis();
+			}
+		}
+		//63
+		//95
+		UserHand[0].setLocation(600, 643);
+		UserHand[1].setLocation(713, 643);
+		
+		this.AddComponent(UserHand[0]);
+		this.AddComponent(UserHand[1]);
+		
+		NextUserCard=2;
+		
+		AIHand[0].setLocation(500,50);
+		AIHand[1].setLocation(613,50);
+		
+		this.AddComponent(AIHand[0]);
+		this.AddComponent(AIHand[1]);
+		
 		for(x=0;x<3;x++){
 				Colours[x]=1;
 			
@@ -36,14 +68,68 @@ public class BlackjackStage extends CustomComponents.Stage{
 		}
 		//1366 wide
 		//768 tall
+
+
+		Buttons[0].setLocation(100,698);
+		Buttons[0].setText(10,30,"Hit");
+		Buttons[0].setAction(new Action(){
+
+			@Override
+			public void run() {
+				UserHand[NextUserCard].DealThis();
+				UserHand[NextUserCard].setLocation(713+(113*(NextUserCard-1)),643);
+				DisplayItem(UserHand[NextUserCard]);
+				NextUserCard++;
+				System.out.println("hit");
+				
+			}
+			
+		});
 		
-		Buttons[0].setLocation((768-70),100);
-		Buttons[0].setContent("Hit");
+		this.AddComponent(Buttons[0]);
+		
+		Buttons[1].setLocation(250,698);
+		Buttons[1].setText(10,30,"Stick");
+		Buttons[1].setAction(new Action(){
+
+			@Override
+			public void run() {
+				/*
+				 * TODO
+				 * Add AI algorithm
+				 */
+				
+				for(int x=0;x<5;x++){
+					AIHand[x].setLocation(AIHand[x].getXpos(), AIHand[x].getYpos()+50);
+					AIHand[x].setFrontFacing(true);
+				}
+				
+				System.out.println("Stick");
+				
+			}
+			
+		});
+		
+		this.AddComponent(Buttons[1]);
+		
+		Buttons[2].setLocation(400,698);
+		Buttons[2].setText(10,30,"Fold");
+		Buttons[2].setAction(new Action(){
+
+			@Override
+			public void run() {
+				System.out.println("Fold");
+				
+			}
+			
+		});
+		
+		this.AddComponent(Buttons[2]);
 		
 		
 		Buttons[6].setColour(Color.BLACK);
 		Buttons[6].setTextColour(Color.red);
-		Buttons[6].setLocation(1000, 500);
+		Buttons[6].setLocation(1200, 700);
 		Buttons[6].setWidth(100);
 		Buttons[6].setHeight(50);
 		Buttons[6].setStyle(1);
@@ -69,6 +155,9 @@ public class BlackjackStage extends CustomComponents.Stage{
 		
 	}
 
+	public void DisplayItem(GUIComponent x){
+		this.AddComponent(x);
+	}
 
 	
 

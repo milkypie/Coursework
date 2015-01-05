@@ -2,6 +2,7 @@ package CustomComponents;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 public abstract class GUIComponent {
 	
@@ -13,6 +14,11 @@ public abstract class GUIComponent {
 	public void setLocation(int X,int Y){
 		Xpos = X;
 		Ypos = Y;
+	}
+	
+	public void setLocation(Point XY){
+		Xpos = XY.x;
+		Ypos = XY.y;
 	}
 	public int getXpos() {
 		return Xpos;

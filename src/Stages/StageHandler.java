@@ -60,7 +60,6 @@ public class StageHandler implements Runnable {
 			//updateUI will activate the Draw function
 			StageArray[CurrentStage].updateUI();
 			//this completely refreshes totalGUI and removes and mouse listener it had
-			//TODO
 			if(CardMain.frame.getContentPane()!=StageArray[CurrentStage]){
 				CardMain.frame.setContentPane(StageArray[CurrentStage]);
 			}
