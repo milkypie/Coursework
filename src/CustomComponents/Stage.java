@@ -20,6 +20,9 @@ public abstract class Stage extends JPanel{
 	public void AddComponent(GUIComponent C){
 		Components.add(C);
 	}
+	public void RemoveComponent(GUIComponent C){
+		Components.remove(C);
+	}
 	
 	public void paintComponent(Graphics g){
 		g.setColor(Color.white);

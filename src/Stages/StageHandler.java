@@ -39,6 +39,25 @@ public class StageHandler implements Runnable {
 		
 		System.out.println("created stagehandler");
 	}
+	public static void reset(int x){
+		switch(x){
+		case 0:
+			StageArray[0] = new MenuStage();
+		break;
+		case 1:
+			StageArray[1] = new BlackjackStage();
+		break;
+		case 2:
+			StageArray[2] = new TexasStage();
+		break;
+		case 3:
+			StageArray[3] = new CheatStage();
+		break;
+		default:
+			System.out.println("that number does not reffer to a stage");
+		break;
+		}
+	}
 	
 	public void Start(){
 		System.out.println("Starting game thread");
