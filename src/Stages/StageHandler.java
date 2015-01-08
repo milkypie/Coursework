@@ -16,7 +16,7 @@ public class StageHandler implements Runnable {
 	public static final int STAGE_MENU = 0;
 	public static final int STAGE_BLACKJACK = 1;
 	public static final int STAGE_TEXAS = 2;
-	public static final int STAGE_CHEAT = 3;
+	public static final int STAGE_AGGIE = 3;
 	public static int CurrentStage = 0;
 	private JPanel CurrentView, NextView;
 	private Boolean View;
@@ -30,12 +30,12 @@ public class StageHandler implements Runnable {
 		StageArray[STAGE_MENU] = new MenuStage();
 		StageArray[STAGE_BLACKJACK] = new BlackjackStage();
 		StageArray[STAGE_TEXAS] = new TexasStage();
-		StageArray[STAGE_CHEAT] = new CheatStage();
+		StageArray[STAGE_AGGIE] = new BlackAggieStage();
 
 		StageArray[STAGE_MENU].addMouseListener(CardMain.MouseHandler);
 		StageArray[STAGE_BLACKJACK].addMouseListener(CardMain.MouseHandler);
 		StageArray[STAGE_TEXAS].addMouseListener(CardMain.MouseHandler);
-		StageArray[STAGE_CHEAT].addMouseListener(CardMain.MouseHandler);
+		StageArray[STAGE_AGGIE].addMouseListener(CardMain.MouseHandler);
 		
 		System.out.println("created stagehandler");
 	}

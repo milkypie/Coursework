@@ -124,7 +124,7 @@ public class MenuStage extends CustomComponents.Stage {
 			public void run() {
 				//change to blackjack stage
 				System.out.println("cheatbutton pressed");
-				Control.CardMain.GameLoop.CurrentStage = StageHandler.STAGE_CHEAT;
+				Control.CardMain.GameLoop.CurrentStage = StageHandler.STAGE_AGGIE;
 				
 			}
 			
