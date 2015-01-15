@@ -60,10 +60,6 @@ public class BlackjackStage extends CustomComponents.Stage{
 		UserHand[0].setLocation(600, 643);
 		UserHand[1].setLocation(713, 643);
 		
-		//TODO
-		//force deal a pair
-		UserHand[0].setValue(UserHand[1].getValue());
-		UserHand[0].updateFace();
 		
 		this.AddComponent(UserHand[0]);
 		this.AddComponent(UserHand[1]);

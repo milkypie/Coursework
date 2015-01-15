@@ -25,7 +25,7 @@ import CustomComponents.Card;
 public class MenuStage extends CustomComponents.Stage {
 	
 	public static Button[] buttons = new Button[4];
-	public String BlackjackContent,TexasContent,CheatContent,ExitContent;
+	public String BlackjackContent,TexasContent,AggieContent,ExitContent;
 	public Image backgroundImage;
 	public Background MenuBackground;
 	public int blue,green,looping;
@@ -110,20 +110,20 @@ public class MenuStage extends CustomComponents.Stage {
 		this.AddComponent(buttons[1]);
 		
 		//Cheat Button
-		CheatContent = "Cheat";
+		AggieContent = "Black Aggie";
 		buttons[2].setColour(Color.black);
 		buttons[2].setTextColour(Color.RED);
 		buttons[2].setLocation(100, 300);
 		buttons[2].setWidth(100);
 		buttons[2].setHeight(50);
 		buttons[2].setStyle(1);
-		buttons[2].setText(10, 30, CheatContent);
+		buttons[2].setText(10, 30, AggieContent);
 		buttons[2].setAction(new Action(){
 			
 			
 			public void run() {
 				//change to blackjack stage
-				System.out.println("cheatbutton pressed");
+				System.out.println("aggiebutton pressed");
 				Control.CardMain.GameLoop.CurrentStage = StageHandler.STAGE_AGGIE;
 				
 			}
