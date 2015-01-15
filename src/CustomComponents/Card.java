@@ -12,7 +12,8 @@ public class Card extends GUIComponent{
 	
 	private Image Face;
 	public int Value,Suit;
-	public boolean FrontFacing = true;
+	private boolean FrontFacing = true;
+	private Action OnClick;
 	
 	public Card(){
 		this.setWidth(100);
@@ -98,4 +99,21 @@ public class Card extends GUIComponent{
 		
 	}
 
+
+	public Action getAction() {
+		return OnClick;
+	}
+
+
+	public void setAction(Action onClick) {
+		OnClick = onClick;
+	}
+	
+	public void RunAction(){
+		OnClick.run();
+	}
+	
+	public void RunAction(GUIComponent x){
+		OnClick.run(x);
+	}
 }
