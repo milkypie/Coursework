@@ -1,3 +1,4 @@
+
 package Stages;
 
 import Control.CardMain;
@@ -10,11 +11,14 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JPanel;
 
+import com.sun.corba.se.impl.io.TypeMismatchException;
+
 
 @SuppressWarnings("serial")
 public class BlackjackStage extends CustomComponents.Stage{
 	
-	public Text WinnerText = new Text();
+	public Panel Indicator = new Panel();
+	public Text WinnerText = new Text(), FirstStickText = new Text();
 	public Button[] Buttons = new Button[7];
 	public int[] Colours = new int[3];
 	public String[] contents = new String[3];
@@ -22,8 +26,8 @@ public class BlackjackStage extends CustomComponents.Stage{
 	public Card[] AIHand = new Card[7], AISplitHand = new Card[7];
 	public Background BJBackground = new Background(null);
 	public Color BackgroundColour = new Color(0,114,0);
-	private int NextUserCard;
-	public boolean UserHasSplit = false,AIHasSplit = false,CanHit=true;
+	private int NextUserCard, NextSplitCard;
+	public boolean UserHasSplit = false,AIHasSplit = false,CanHit=true,SplitStuck = false;
 	public BlackjackStage(){
 		ID = 1;
 		
@@ -36,6 +40,9 @@ public class BlackjackStage extends CustomComponents.Stage{
 		for(x=0;x<7;x++){
 			AIHand[x] = new Card();
 			UserHand[x] = new Card();
+			UserSplitHand[x] = new Card();
+			AISplitHand[x] = new Card();
+			UserSplitHand[x].setLocation(600+(113*x), 543);
 			AIHand[x].setFrontFacing(false);
 			if(x>1){
 				UserHand[x].setActive(false);
@@ -49,13 +56,20 @@ public class BlackjackStage extends CustomComponents.Stage{
 		}
 		//63
 		//95
+		
 		UserHand[0].setLocation(600, 643);
 		UserHand[1].setLocation(713, 643);
+		
+		//TODO
+		//force deal a pair
+		UserHand[0].setValue(UserHand[1].getValue());
+		UserHand[0].updateFace();
 		
 		this.AddComponent(UserHand[0]);
 		this.AddComponent(UserHand[1]);
 		
 		NextUserCard=2;
+		NextSplitCard=2;
 		
 		AIHand[0].setLocation(500,50);
 		AIHand[1].setLocation(613,50);
@@ -81,13 +95,33 @@ public class BlackjackStage extends CustomComponents.Stage{
 			@Override
 			public void run() {
 				if(CanHit){
-					UserHand[NextUserCard].DealThis();
-					UserHand[NextUserCard].setLocation(713+(113*(NextUserCard-1)),643);
-					AddItem(UserHand[NextUserCard]);
-					NextUserCard++;
-	
-					if(ScoreHand(UserHand)==0){
-						Buttons[1].runAction();
+					if(UserHasSplit){
+						if(SplitStuck){
+							UserSplitHand[NextSplitCard].DealThis();
+							UserSplitHand[NextSplitCard].setLocation(713+(113*(NextSplitCard-1)),543);
+							AddItem(UserSplitHand[NextSplitCard]);
+							NextSplitCard++;
+							if(ScoreHand(UserSplitHand)==0){
+								Buttons[1].runAction();
+							}
+						}else{
+							if(NextUserCard<7){
+								UserHand[NextUserCard].DealThis();
+								UserHand[NextUserCard].setLocation(713+(113*(NextUserCard-1)),643);
+								AddItem(UserHand[NextUserCard]);
+								NextUserCard++;
+							}
+						}
+					}else{
+						if(NextUserCard<7){
+							UserHand[NextUserCard].DealThis();
+							UserHand[NextUserCard].setLocation(713+(113*(NextUserCard-1)),643);
+							AddItem(UserHand[NextUserCard]);
+							NextUserCard++;
+						}
+						if(ScoreHand(UserHand)==0){
+							Buttons[1].runAction();
+						}
 					}
 				}
 			}
@@ -102,12 +136,30 @@ public class BlackjackStage extends CustomComponents.Stage{
 
 			@Override
 			public void run() {
+				if(UserHasSplit){
+					if(SplitStuck){
+						CanHit=false;
+						System.out.println("user has Stuck");
+						AIPlay();
+						DecideWhoWins();
+					}else{
+						SplitStuck = true;
+						Indicator.setLocation(530,600);
+						
+						FirstStickText.setLocation(200,670);
+						FirstStickText.setColour(Color.YELLOW);
+						FirstStickText.setWidth(100);
+						FirstStickText.setContent("You are now drawing to your second hand");
+						AddItem(FirstStickText);
+					}
+				}else{
+					
 				System.out.println("user has Stuck");
 				CanHit=false;
 				AIPlay();
 				DecideWhoWins();
 				
-				
+				}
 			}
 			
 		});
@@ -123,6 +175,23 @@ public class BlackjackStage extends CustomComponents.Stage{
 				System.out.println("Split");
 				if(UserHand[0].Value==UserHand[1].Value){
 					if(!UserHasSplit){
+						System.out.println("----------");
+						UserHasSplit=true;
+						UserSplitHand[0].setValue(UserHand[1].getValue());
+						UserSplitHand[0].setSuit(UserHand[1].getSuit());
+						UserSplitHand[0].updateFace();
+						UserHand[1].DealThis();
+						UserSplitHand[1].DealThis();
+						
+						Indicator.setWidth(50);
+						Indicator.setHeight(10);
+						Indicator.setColour(Color.red);
+						Indicator.setLocation(530,670);
+						
+						
+						AddItem(Indicator);
+						AddItem(UserSplitHand[0]);
+						AddItem(UserSplitHand[1]);
 						
 					}
 				}
@@ -141,25 +210,40 @@ public class BlackjackStage extends CustomComponents.Stage{
 			@Override
 			public void run() {
 				System.out.println("resetting game");
-				
-				RemoveItem(WinnerText);
+				for(int x=0;x<4;x++){
+					for(int y=0;y<13;y++){
+						Control.CardMain.CardOut[x][y] = false;
+					}
+				}
 				for(int x=0;x<7;x++){
 					AIHand[x].setLocation(500+(113*x), 50);
 					AIHand[x].setFrontFacing(false);
-					
+					if(UserHasSplit){
+						UserSplitHand[x].setValue(-1);
+					}
 					if(x>1){
 						AIHand[x].setValue(-1);
+						UserHand[x].setValue(-1);
 						RemoveItem(AIHand[x]);
 						RemoveItem(UserHand[x]);
-						UserHand[x].setValue(-1);
 					}else{
 						AIHand[x].DealThis();
 						UserHand[x].DealThis();
 					}
 				}
+				if(UserHasSplit){	
+					for(int x=0;x<7;x++){
+						RemoveItem(UserSplitHand[x]);
+					}
+					RemoveItem(FirstStickText);
+					RemoveItem(Indicator);
+				}
 				RemoveItem(WinnerText);
 				NextUserCard = 2;
+				NextSplitCard = 2;
 				CanHit=true;
+				UserHasSplit=false;
+				SplitStuck=false;
 			}
 			
 		});
@@ -171,8 +255,6 @@ public class BlackjackStage extends CustomComponents.Stage{
 
 			@Override
 			public void run() {
-				System.out.println(Toolkit.getDefaultToolkit().getScreenSize().width);
-				System.out.println(Toolkit.getDefaultToolkit().getScreenSize().height);
 				System.exit(0);
 				
 			}
@@ -216,7 +298,9 @@ public class BlackjackStage extends CustomComponents.Stage{
 	}
 	
 	public void DecideWhoWins(){
+		
 		int AIHighestScore;
+		int UserHighestScore = 0;
 		System.out.println("scoring AI");
 		int AIScore = ScoreHand(AIHand);
 		System.out.println("scoring user");
@@ -232,6 +316,16 @@ public class BlackjackStage extends CustomComponents.Stage{
 		}else{
 			AIHighestScore = AIScore;
 		}
+		if(UserHasSplit){
+			UserSplitScore = ScoreHand(UserSplitHand);
+			if(UserSplitScore>UserScore){
+				UserHighestScore = UserSplitScore;
+			}else{
+				UserHighestScore = UserScore;
+			}
+		}else{
+			UserHighestScore = UserScore;
+		}
 		WinnerText.setLocation(400, 400);
 		WinnerText.setWidth(100);
 		WinnerText.setHeight(50);
@@ -240,10 +334,10 @@ public class BlackjackStage extends CustomComponents.Stage{
 			AIHand[x].setLocation(AIHand[x].getXpos(), 100);
 			AIHand[x].setFrontFacing(true);
 		}
-		if(AIHighestScore>UserScore&&AIHighestScore>UserSplitScore){
+		if(AIHighestScore>UserHighestScore){
 			//lose
 			WinnerText.setContent("You lose");
-		}else if(UserScore>AIHighestScore){
+		}else if(UserHighestScore>AIHighestScore){
 			//win
 			WinnerText.setColour(Color.BLUE);
 			WinnerText.setContent("You Win");
@@ -253,6 +347,11 @@ public class BlackjackStage extends CustomComponents.Stage{
 			WinnerText.setContent("You Draw");
 		}
 		AddItem(WinnerText);
+		System.out.println("===========");
+		System.out.println("ai scored: "+AIHighestScore+"\n User scored"+UserHighestScore);
+		System.out.println("=============");
+		
+		
 	}
 	public int ScoreHand(Card[] Hand){
 		int Score=0;
@@ -289,7 +388,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 					Score=Score+10;
 				break;
 				default:
-					System.out.println("found a"+Hand[x].getValue()+1);
+					System.out.println("found a "+(Hand[x].getValue()+1));
 					Score = Score + Hand[x].getValue()+1;
 				break;
 				}

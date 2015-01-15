@@ -79,6 +79,19 @@ public class Card extends GUIComponent{
 		}
 		
 	}
+	public void updateFace(){
+		Face = Control.CardMain.Faces[Suit][Value];
+	}
+
+	public int getSuit() {
+		return Suit;
+	}
+
+
+	public void setSuit(int suit) {
+		Suit = suit;
+	}
+
 
 	@Override
 	public void Update() {
