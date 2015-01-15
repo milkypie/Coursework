@@ -7,21 +7,26 @@ import CustomComponents.*;
 
 @SuppressWarnings("serial")
 public class BlackAggieStage extends CustomComponents.Stage{
-	Card[] UserHand = new Card[13];
-	Action CardAction;
-	Card[][] AIHand = new Card[3][13];
-	Button[] Buttons = new Button[3];
-	Boolean SwapStage = true;
+	private Card[] UserHand = new Card[13];
+	private Action CardAction;
+	private Card[][] AIHand = new Card[3][13];
+	private Button[] Buttons = new Button[3];
+	private Boolean SwapStage = true;
+	Background AggieBJ = new Background(null);
 	
 	public BlackAggieStage(){
 		ID = 3;
-		
+		this.AddComponent(AggieBJ);
 		CardAction = new Action(){
 
 			@Override
 			public void run() {}
 			public void run(GUIComponent x){
-				
+				if(x.getYpos()==643){
+					x.setLocation(x.getXpos(),603);
+				}else{
+					x.setLocation(x.getXpos(),643);
+				}
 			}
 			
 		};
@@ -34,6 +39,13 @@ public class BlackAggieStage extends CustomComponents.Stage{
 			UserHand[x].DealThis();
 			UserHand[x].setLocation(400+(50*(x-1)), 643);
 			UserHand[x].setAction(CardAction);
+			
+			AIHand[0][x] = new Card();
+			AIHand[0][x].DealThis();
+			AIHand[0][x].setLocation(400+(50*(x-1)), 50);
+			AIHand[0][x].setFrontFacing(false);
+			
+			AddItem(AIHand[0][x]);
 			AddItem(UserHand[x]);
 		}
 		
@@ -70,6 +82,8 @@ public class BlackAggieStage extends CustomComponents.Stage{
 				System.out.println("done");
 			}
 		});
+		
+		this.AddComponent(Buttons[2]);
 	}
 	
 	public void Prepare() {

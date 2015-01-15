@@ -2,6 +2,7 @@ package CustomComponents;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 
 import javax.imageio.ImageIO;
@@ -18,6 +19,7 @@ public class Card extends GUIComponent{
 	public Card(){
 		this.setWidth(100);
 		this.setHeight(500);
+		Rotation = 90;
 		Value = -1;
 	}
 		
@@ -70,12 +72,15 @@ public class Card extends GUIComponent{
 	@Override
 	public void Draw(Graphics g) {
 		// x,y,width,height,arcwidth,archeight
-		
+		Graphics2D gg = (Graphics2D) g.create();
 		//creates card image
-		g.setColor(null);
+		
+		g.setColor(Colour);
+		
 		if(FrontFacing){	
 			g.drawImage(Face, Xpos, Ypos, null);	
 		}else{
+			
 			g.drawImage(Control.CardMain.Back, Xpos, Ypos, null);
 		}
 		

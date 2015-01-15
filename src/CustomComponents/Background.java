@@ -1,5 +1,6 @@
 package CustomComponents;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -14,6 +15,7 @@ public class Background extends GUIComponent{
 		}else{
 			RenderWithImage = false;
 		}
+		Colour = new Color(0,114,0);
 	}
 	
 	public Boolean getRenderWithImage() {
