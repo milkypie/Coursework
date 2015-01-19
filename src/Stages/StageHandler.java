@@ -18,8 +18,6 @@ public class StageHandler implements Runnable {
 	public static final int STAGE_TEXAS = 2;
 	public static final int STAGE_AGGIE = 3;
 	public static int CurrentStage = 0;
-	private JPanel CurrentView, NextView;
-	private Boolean View;
 	private Thread GameThread;
 	
 	public static CustomComponents.Stage[] StageArray = new CustomComponents.Stage[4];
