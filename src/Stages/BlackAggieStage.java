@@ -3,6 +3,7 @@ package Stages;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import Control.CardMain;
 import CustomComponents.*;
 
 @SuppressWarnings("serial")
@@ -17,6 +18,7 @@ public class BlackAggieStage extends CustomComponents.Stage{
 	public BlackAggieStage(){
 		ID = 3;
 		this.AddComponent(AggieBJ);
+		
 		CardAction = new Action(){
 
 			@Override
@@ -36,20 +38,29 @@ public class BlackAggieStage extends CustomComponents.Stage{
 		
 		for(int x=0;x<13;x++){
 			UserHand[x] = new Card();
-			UserHand[x].DealThis();
 			UserHand[x].setLocation(400+(50*(x-1)), 643);
 			UserHand[x].setAction(CardAction);
 			
 			AIHand[0][x] = new Card();
-			AIHand[0][x].DealThis();
 			AIHand[0][x].setLocation(400+(50*(x-1)), 50);
 			AIHand[0][x].setFrontFacing(false);
 			
-			AddItem(AIHand[0][x]);
-			AddItem(UserHand[x]);
+
+			AIHand[1][x]= new Card();
+			AIHand[1][x].setLocation(1225, 200+(30*(x-1)));
+			AIHand[1][x].setFrontFacing(false);
+			AIHand[1][x].setRotated(true);
+			
+			AIHand[2][x]= new Card();
+			AIHand[2][x].setLocation(100, 200+(30*(x-1)));
+			AIHand[2][x].setFrontFacing(false);
+			AIHand[2][x].setRotated(true);
+			
+
+			
 		}
-		
-		Buttons[0].setLocation(1200,600);
+
+		Buttons[0].setLocation(1050,675);
 		Buttons[0].setText(10,30,"Re-set");
 		Buttons[0].setAction(new Action(){
 
@@ -57,12 +68,18 @@ public class BlackAggieStage extends CustomComponents.Stage{
 			public void run() {
 				System.out.println("resetting game");
 				
+				for(int y = 0;y<4;y++){
+					for(int x=0;x<13;x++){
+						CardMain.CardOut[y][x] = false;
+					}
+				}
+				
 			}
 			
 		});
 		
 		this.AddComponent(Buttons[0]);
-		Buttons[1].setLocation(1200, 700);
+		Buttons[1].setLocation(1200, 675);
 		Buttons[1].setText(10, 30, "exit");
 		Buttons[1].setAction(new Action(){
 
@@ -75,7 +92,7 @@ public class BlackAggieStage extends CustomComponents.Stage{
 		});
 		this.AddComponent(Buttons[1]);
 		
-		Buttons[2].setLocation(1200, 500);
+		Buttons[2].setLocation(150, 675);
 		Buttons[2].setText(10,30,"Done");
 		Buttons[2].setAction(new Action(){
 			public void run(){
@@ -87,6 +104,23 @@ public class BlackAggieStage extends CustomComponents.Stage{
 	}
 	
 	public void Prepare() {
+		for(int x=0;x<4;x++){
+			for(int y=0;y<13;y++){
+				CardMain.CardOut[x][y] = false;
+			}
+		}
+		for(int x=0;x<13;x++){
+			UserHand[x].DealThis();
+			AIHand[0][x].DealThis();
+			AIHand[1][x].DealThis();
+			AIHand[2][x].DealThis();
+			
+			AddItem(AIHand[2][x]);
+			AddItem(AIHand[1][x]);
+			AddItem(AIHand[0][x]);
+			AddItem(UserHand[x]);
+			
+		}
 	}
 	
 	
@@ -124,7 +158,6 @@ public class BlackAggieStage extends CustomComponents.Stage{
 		if(!FoundSource){
 			for(i=12;i>=0;i--){
 				if(!FoundSource){
-					System.out.println(i);
 					if(MouseLocation.x>UserHand[i].getXpos()&&MouseLocation.x<UserHand[i].getXpos()+UserHand[i].getWidth()){
 						if(MouseLocation.y>UserHand[i].getYpos()&&MouseLocation.y<UserHand[i].getYpos()+UserHand[i].getHeight()){
 							System.out.println("clicked on Card " + i);

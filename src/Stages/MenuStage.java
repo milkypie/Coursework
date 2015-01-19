@@ -75,11 +75,7 @@ public class MenuStage extends CustomComponents.Stage {
 			public void run() {
 				//change to blackjack stage
 				System.out.println("blackjackbuton pressed");
-				Control.CardMain.GameLoop.CurrentStage = StageHandler.STAGE_BLACKJACK;
-				System.out.println(StageHandler.STAGE_BLACKJACK);
-				System.out.println(Control.CardMain.GameLoop.CurrentStage);
-				Control.CardMain.GameLoop.StageArray[Control.CardMain.GameLoop.CurrentStage].Update();
-				Control.CardMain.GameLoop.StageArray[Control.CardMain.GameLoop.CurrentStage].updateUI();
+				Control.CardMain.GameLoop.ChangeStage(StageHandler.STAGE_BLACKJACK);
 			}
 			
 		});
@@ -101,7 +97,7 @@ public class MenuStage extends CustomComponents.Stage {
 			public void run() {
 				//change to blackjack stage
 				System.out.println("Texasbuttttttton pressed");
-				Control.CardMain.GameLoop.CurrentStage = StageHandler.STAGE_TEXAS;
+				Control.CardMain.GameLoop.ChangeStage(StageHandler.STAGE_TEXAS);
 				
 			}
 			
@@ -124,7 +120,9 @@ public class MenuStage extends CustomComponents.Stage {
 			public void run() {
 				//change to blackjack stage
 				System.out.println("aggiebutton pressed");
-				Control.CardMain.GameLoop.CurrentStage = StageHandler.STAGE_AGGIE;
+
+				Control.CardMain.GameLoop.ChangeStage(StageHandler.STAGE_AGGIE);
+				
 				
 			}
 			

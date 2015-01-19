@@ -67,6 +67,11 @@ public class StageHandler implements Runnable {
 		
 		GameThread.start();
 	}
+	
+	public void ChangeStage(int x){
+		StageArray[x].Prepare();
+		CurrentStage = x;
+	}
 
 	public void run() {
 		long startTime = 0;
