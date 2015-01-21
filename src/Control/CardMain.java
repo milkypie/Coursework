@@ -126,6 +126,14 @@ public class CardMain{
 
 
 	}
+	public static void resetDeck(){
+		int x,y;
+		for(x=0;x<4;x++){
+			for(y=0;y<13;y++){
+				CardOut[x][y] = false;
+			}
+		}
+	}
 	public JPanel CreateContentPane(){
 		
 		TotalGUI = StageHandler.StageArray[StageHandler.STAGE_MENU];
