@@ -12,11 +12,19 @@ public class BlackAggieStage extends CustomComponents.Stage{
 	private Action CardAction;
 	private Card[][] AIHand = new Card[3][13];
 	private Button[] Buttons = new Button[3];
-	private Boolean SwapStage = true;
+	private Boolean InitialSection = true;
+	private int[][] SelectedLocations = new int[4][3];
+	private Card[][] MovedCards = new Card[4][3];
 	Background AggieBJ = new Background(null);
 	
 	public BlackAggieStage(){
 		ID = 3;
+		for(int x = 0;x<4;x++){
+			for(int y=0;y<3;y++){
+				SelectedLocations[x][y]=-1;
+				MovedCards[x][y] = new Card();
+			}
+		}
 		this.AddComponent(AggieBJ);
 		
 		CardAction = new Action(){
@@ -43,17 +51,17 @@ public class BlackAggieStage extends CustomComponents.Stage{
 			
 			AIHand[1][x] = new Card();
 			AIHand[1][x].setLocation(400+(50*(x-1)), 50);
-			AIHand[1][x].setFrontFacing(false);
+			AIHand[1][x].setFrontFacing(true);
 			
 
 			AIHand[2][x]= new Card();
 			AIHand[2][x].setLocation(1225, 200+(30*(x-1)));
-			AIHand[2][x].setFrontFacing(false);
+			AIHand[2][x].setFrontFacing(true);
 			AIHand[2][x].setRotated(true);
 			
 			AIHand[0][x]= new Card();
 			AIHand[0][x].setLocation(100, 200+(30*(x-1)));
-			AIHand[0][x].setFrontFacing(false);
+			AIHand[0][x].setFrontFacing(true);
 			AIHand[0][x].setRotated(true);
 			
 
@@ -97,18 +105,223 @@ public class BlackAggieStage extends CustomComponents.Stage{
 		Buttons[2].setAction(new Action(){
 			public void run(){
 				System.out.println("done");
+				if(InitialSection){
+					Swap();
+					InitialSection = false;
+				}else{
+					
+				}
+				
 			}
 		});
 		
 		this.AddComponent(Buttons[2]);
 	}
 	
-	public void Prepare() {
-		for(int x=0;x<4;x++){
-			for(int y=0;y<13;y++){
-				CardMain.CardOut[x][y] = false;
+	public void Swap(){
+		System.out.println("swapping");
+		if(CardsSelected()==3){
+			SelectAISwap();
+			System.out.println("Decided swaps");
+			int i=0;
+			for(int x = 0;x<4;x++){
+				for(int y=0;y<3;y++){
+					if(x==3){
+						MovedCards[3][i].setSuit(UserHand[SelectedLocations[x][y]].getSuit());
+						MovedCards[3][i].setValue(UserHand[SelectedLocations[x][y]].getValue());
+					}else{
+						MovedCards[x][i].setSuit(AIHand[x][SelectedLocations[x][y]].getSuit());
+						MovedCards[x][i].setValue(AIHand[x][SelectedLocations[x][y]].getValue());
+					}
+					
+					i++;
+					System.out.println(SelectedLocations[x][y]);
+				}
+				i=0;
+				System.out.println("new Hand");
+			}
+			
+			for(int x=0;x<4;x++){
+				for(int y=0;y<3;y++){
+					if(x==3){
+						UserHand[SelectedLocations[x][y]].setSuit(MovedCards[2][y].getSuit());
+						UserHand[SelectedLocations[x][y]].setValue(MovedCards[2][y].getValue());
+						UserHand[SelectedLocations[x][y]].updateFace();
+						
+					}else if(x==0){
+						AIHand[x][SelectedLocations[x][y]].setSuit(MovedCards[3][y].getSuit());
+						AIHand[x][SelectedLocations[x][y]].setValue(MovedCards[3][y].getValue());
+						AIHand[x][SelectedLocations[x][y]].updateFace();
+						
+					}else{
+						AIHand[x][SelectedLocations[x][y]].setSuit(MovedCards[x-1][y].getSuit());
+						AIHand[x][SelectedLocations[x][y]].setValue(MovedCards[x-1][y].getValue());
+						AIHand[x][SelectedLocations[x][y]].updateFace();
+						
+					}
+					
+				}
+				
+			}
+			
+			
+		}else{
+			System.out.println("wrong number of selected cards");
+			SelectedLocations[3][0]=-1;
+			SelectedLocations[3][1]=-1;
+			SelectedLocations[3][2]=-1;
+		}
+	}
+	
+	public void SelectAISwap(){
+			int[] Selected =new int[3];
+			Selected[0] = 0;
+			Selected[1] = 0;
+			Selected[2] = 0;
+			try{
+				//Queen of spades
+				Selected[FindCard(11,3)]++;
+			}catch( ArrayIndexOutOfBoundsException e){}
+			try{
+				//ace of hearts
+				Selected[FindCard(0,2)]++;
+			}catch( ArrayIndexOutOfBoundsException e){}
+			try{
+				//ace of spades
+				Selected[FindCard(0,3)]++;
+			}catch( ArrayIndexOutOfBoundsException e){}
+			try{
+				//king of spades
+				Selected[FindCard(12,3)]++;
+			}catch( ArrayIndexOutOfBoundsException e){}
+			int Value = 12, Suit;
+			//Hearts
+			for(int x=0;x<3;x++){
+				while(Selected[x]!=3){
+					if(Value!=0){
+						if(HasCard(x,Value,2)){
+							Selected[x]++;
+							
+						}
+						Value--;
+					}else{
+						break;
+					}
+				}
+				Suit = 0;
+				Value = 0;
+				//Ace and king of Clubs and Diamonds
+				while(Selected[x]!=3){
+					if(HasCard(x,Value,Suit)){
+						Selected[x]++;
+					}
+					if(Suit==0){
+						Suit=1;
+					}else{
+						if(Value==0){
+							Suit = 0;
+							Value = 12;
+						}else if(Value == 12){
+							Suit = 0;
+							Value = 11;
+						}else{
+							break;
+						}
+					}
+				}
+				Suit = 0;
+				Value = 10;
+				//High card of any suit
+				while(Selected[x]!=3){
+					if(HasCard(x,Value,Suit)){
+						Selected[x]++;
+					}
+					switch(Suit){
+					case 0:
+						Suit = 1;
+					break;
+					case 1:
+						Suit = 3;
+					break;
+					case 3:
+						Suit = 0;
+						Value--;
+					break;
+					default:
+						System.out.println("*********ERROR: BLACKAGGIESTAGE LINE 189****************");
+					break;
+					}
+				}
+				
 			}
 		}
+	
+	public void TryToSelect(int Hand,int Position){
+		for(int i=0;i<3;i++){
+			if(SelectedLocations[Hand][i]==-1){
+				SelectedLocations[Hand][i]=Position;
+				break;
+			}
+		}
+	}
+	public int FindCard(int Value,int Suit){
+		for(int x=0;x<3;x++){
+			for(int y=0;y<13;y++){
+				if(AIHand[x][y].Value==Value){
+					if(AIHand[x][y].Suit==Suit){
+						System.out.print("=======\nFound card:"+Value+"in suit"+Suit+"\n at"+x+","+y+"\n++++++++\n");
+						switch(x){
+						case 0:
+							AIHand[x][y].setXpos(150);
+						break;
+						case 1:
+							AIHand[x][y].setYpos(AIHand[x][y].getYpos()+50);
+						break;
+						default:
+							AIHand[x][y].setXpos(1175);
+						break;
+						}
+						TryToSelect(x,y);
+						return x;
+					}
+				}
+			}
+		}
+		
+		return 3;
+	}
+	public boolean HasCard(int Hand,int Value,int Suit){
+		
+		for(int x = 0;x<AIHand[Hand].length;x++){
+			if(AIHand[Hand][x].getSuit()==Suit){
+				if(AIHand[Hand][x].getValue()==Value){
+					if(AIHand[Hand][x].getXpos()==100){
+						AIHand[Hand][x].setXpos(150);
+					}else if(AIHand[Hand][x].getXpos()==1225){
+						AIHand[Hand][x].setXpos(1175);
+					}else{
+						AIHand[Hand][x].setYpos(AIHand[Hand][x].getYpos()+50);
+					}
+					TryToSelect(Hand,x);
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	public int CardsSelected(){
+		int x,y=0;
+		for(x=0;x<13;x++){
+			if(UserHand[x].getYpos()==603){
+				TryToSelect(3,x);
+				y++;
+			}
+		}
+		return y;
+	}
+	public void Prepare() {
+		CardMain.resetDeck();
 		for(int x=0;x<13;x++){
 			UserHand[x].DealThis();
 			AIHand[0][x].DealThis();
@@ -141,7 +354,7 @@ public class BlackAggieStage extends CustomComponents.Stage{
 		int i;
 		Boolean FoundSource = false;
 		Point MouseLocation = MouseArg.getLocationOnScreen();
-		for(i=0;i<2;i++){
+		for(i=0;i<3;i++){
 			if(!FoundSource){
 				//if event took place inside x
 				if(MouseLocation.x>Buttons[i].getXpos()&&MouseLocation.x<Buttons[i].getXpos()+Buttons[i].getWidth()){
