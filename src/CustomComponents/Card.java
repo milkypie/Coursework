@@ -68,24 +68,30 @@ public class Card extends GUIComponent{
 		 Face = Control.CardMain.Faces[Suit][Value];
 		 Control.CardMain.CardOut[Suit][Value] = true;
 	}
+	public void CopyCard(Card x){
+		Value = x.getValue();
+		Suit = x.getSuit();
+		UpdateFace();
+	}
 	
 	@Override
 	public void Draw(Graphics g) {
 		// x,y,width,height,arcwidth,archeight
 		//creates card image
-		
-		g.setColor(Colour);
-		
-		if(FrontFacing){	
-			g.drawImage(Face, Xpos, Ypos, null);	
-		}else if(Rotated){
-			g.drawImage(Control.CardMain.BackRot, Xpos, Ypos, null);
-		}else{
-			g.drawImage(Control.CardMain.Back, Xpos, Ypos, null);
+		if(Active){
+			g.setColor(Colour);
+			
+			if(FrontFacing){	
+				g.drawImage(Face, Xpos, Ypos, null);	
+			}else if(Rotated){
+				g.drawImage(Control.CardMain.BackRot, Xpos, Ypos, null);
+			}else{
+				g.drawImage(Control.CardMain.Back, Xpos, Ypos, null);
+			}
 		}
 		
 	}
-	public void updateFace(){
+	public void UpdateFace(){
 		Face = Control.CardMain.Faces[Suit][Value];
 	}
 

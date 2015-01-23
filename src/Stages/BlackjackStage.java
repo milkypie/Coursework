@@ -169,7 +169,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 						UserHasSplit=true;
 						UserSplitHand[0].setValue(UserHand[1].getValue());
 						UserSplitHand[0].setSuit(UserHand[1].getSuit());
-						UserSplitHand[0].updateFace();
+						UserSplitHand[0].UpdateFace();
 						UserHand[1].DealThis();
 						UserSplitHand[1].DealThis();
 						
