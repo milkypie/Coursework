@@ -70,6 +70,16 @@ public class StageHandler implements Runnable {
 		StageArray[x].Prepare();
 		CurrentStage = x;
 	}
+	public void UpdateView(){
+		//refreshes the current stage panel
+		StageArray[CurrentStage].Update();
+		//updateUI will activate the Draw function
+		StageArray[CurrentStage].updateUI();
+		//this completely refreshes totalGUI and removes and mouse listener it had
+		if(CardMain.frame.getContentPane()!=StageArray[CurrentStage]){
+			CardMain.frame.setContentPane(StageArray[CurrentStage]);
+		}
+	}
 
 	public void run() {
 		long startTime = 0;
@@ -77,14 +87,8 @@ public class StageHandler implements Runnable {
 		
 		while(true){
 			startTime = System.nanoTime();
-			//refreshes the current stage panel
-			StageArray[CurrentStage].Update();
-			//updateUI will activate the Draw function
-			StageArray[CurrentStage].updateUI();
-			//this completely refreshes totalGUI and removes and mouse listener it had
-			if(CardMain.frame.getContentPane()!=StageArray[CurrentStage]){
-				CardMain.frame.setContentPane(StageArray[CurrentStage]);
-			}
+			
+			UpdateView();
 			
 			while(System.nanoTime() - startTime <= RATE){
 				try{
