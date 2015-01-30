@@ -15,6 +15,10 @@ public abstract class GUIComponent {
 	public int getRotation() {
 		return Rotation;
 	}
+	public void setLocaiton(int x,int y){
+		Xpos = x;
+		Ypos = y;
+	}
 
 	public void setRotation(int rotation) {
 		Rotation = rotation;

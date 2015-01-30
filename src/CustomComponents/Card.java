@@ -124,7 +124,7 @@ public class Card extends GUIComponent{
 		OnClick.run();
 	}
 	
-	public void RunAction(GUIComponent x){
+	public void RunAction(Card x){
 		OnClick.run(x);
 	}
 
