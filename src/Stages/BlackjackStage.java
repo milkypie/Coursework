@@ -199,41 +199,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 
 			@Override
 			public void run() {
-				for(int x=0;x<4;x++){
-					for(int y=0;y<13;y++){
-						Control.CardMain.CardOut[x][y] = false;
-					}
-				}
-				for(int x=0;x<7;x++){
-					AIHand[x].setLocation(500+(113*x), 50);
-					AIHand[x].setFrontFacing(false);
-					if(UserHasSplit){
-						UserSplitHand[x].setValue(-1);
-					}
-					if(x>1){
-						AIHand[x].setValue(-1);
-						UserHand[x].setValue(-1);
-						RemoveItem(AIHand[x]);
-						RemoveItem(UserHand[x]);
-					}else{
-						AIHand[x].DealThis();
-						UserHand[x].DealThis();
-					}
-				}
-				if(UserHasSplit){	
-					for(int x=0;x<7;x++){
-						RemoveItem(UserSplitHand[x]);
-					}
-					RemoveItem(FirstStickText);
-					RemoveItem(Indicator);
-				}
-				RemoveItem(WinnerText);
-				NextUserCard = 2;
-				NextSplitCard = 2;
-				CanHit=true;
-				UserHasSplit=false;
-				SplitStuck=false;
-				
+				Buttons[5].runAction();
 				Control.CardMain.GameLoop.ChangeStage(StageHandler.STAGE_MENU);
 			}
 			
@@ -249,11 +215,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 			public void run() {
 				System.out.println("resetting game");
 				
-				for(int x=0;x<4;x++){
-					for(int y=0;y<13;y++){
-						Control.CardMain.CardOut[x][y] = false;
-					}
-				}
+				CardMain.resetDeck();
 				for(int x=0;x<7;x++){
 					AIHand[x].setLocation(500+(113*x), 50);
 					AIHand[x].setFrontFacing(false);
