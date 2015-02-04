@@ -2,16 +2,34 @@ package CustomComponents;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class Button extends GUIComponent{
+public class Button extends GUIComponent implements MouseListener{
 
 	//text stuff
+	public Action action;
 	private Text Text = new Text();
 	private int TextX = 0 ,TextY = 0,TextWidth = 80,TextHeight = 30;
-	private Color TextColour = Color.black;
+	private Color TextColour = Color.RED;
 	private String Content = "";
-	private int Style = 0;
+	private int Style = 1;
 	
+	public Button(){
+		this.width = 100;
+		this.height = 50;
+		this.Colour = Color.BLACK;
+	}
+	
+	public void setAction(Action newAction){
+		action = newAction;
+	}
+	
+	public void runAction(){
+		if(action!=null){
+			action.run();
+		}
+	}
 		
 	public int getTextWidth() {
 		return TextWidth;
@@ -98,7 +116,6 @@ public class Button extends GUIComponent{
 	}
 	
 	public void Draw(Graphics g) {
-		System.out.println("Drew Button");
 		g.setColor(Colour);
 		switch(Style){
 		case 1:
@@ -111,7 +128,6 @@ public class Button extends GUIComponent{
 		
 		g.setColor(TextColour);
 		Text.setColour(TextColour);
-		System.out.println("::::"+Content);
 		Text.setContent(Content);
 		Text.setXpos(TextX);
 		Text.setYpos(TextY);
@@ -131,6 +147,41 @@ public class Button extends GUIComponent{
 
 	@Override
 	public void Update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

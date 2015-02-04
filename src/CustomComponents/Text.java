@@ -26,7 +26,6 @@ public class Text extends GUIComponent{
 	
 	public void setContent(String content){
 		Content = content;
-		System.out.println(":::::"+Content);
 	}
 
 	public void Update() {
@@ -35,9 +34,7 @@ public class Text extends GUIComponent{
 
 
 	public void Draw(Graphics g) {
-		System.out.println("Drew text");
 		g.setColor(Colour);
-		System.out.println(Content);
 		if(Content!=null){
 			g.drawString(Content, Xpos, Ypos);
 		}else{

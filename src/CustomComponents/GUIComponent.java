@@ -2,16 +2,32 @@ package CustomComponents;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 public abstract class GUIComponent {
 	
-	protected int Xpos = 0,Ypos = 0,width = 80,height = 30;
+	protected int Xpos = 0,Ypos = 0,width = 80,height = 30,ActionID;
+	protected Action action;
 	protected Color Colour = Color.black;
 	protected boolean Active = true;
+	protected int Rotation = 0;
 	
+	public int getRotation() {
+		return Rotation;
+	}
+
+	public void setRotation(int rotation) {
+		Rotation = rotation;
+	}
+
 	public void setLocation(int X,int Y){
 		Xpos = X;
 		Ypos = Y;
+	}
+	
+	public void setLocation(Point XY){
+		Xpos = XY.x;
+		Ypos = XY.y;
 	}
 	public int getXpos() {
 		return Xpos;
