@@ -136,17 +136,17 @@ public class BlackAggieStage extends CustomComponents.Stage {
 			
 			AIHand[1][x] = new Card();
 			AIHand[1][x].setLocation(400+(50*(x-1)), 50);
-			AIHand[1][x].setFrontFacing(true);
+			AIHand[1][x].setFrontFacing(false);
 			
 
 			AIHand[2][x]= new Card();
 			AIHand[2][x].setLocation(1225, 200+(30*(x-1)));
-			AIHand[2][x].setFrontFacing(true);
+			AIHand[2][x].setFrontFacing(false);
 			AIHand[2][x].setRotated(true);
 			
 			AIHand[0][x]= new Card();
 			AIHand[0][x].setLocation(100, 200+(30*(x-1)));
-			AIHand[0][x].setFrontFacing(true);
+			AIHand[0][x].setFrontFacing(false);
 			AIHand[0][x].setRotated(true);
 			
 
