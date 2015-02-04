@@ -2,33 +2,16 @@ package Stages;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.concurrent.TimeUnit;
-
-import javax.swing.Timer;
-
 import Control.CardMain;
 import CustomComponents.*;
-
-/*
- * TODO:
- * BUTTONS
- * ResetGame Action
- * 
- * GAMESCORING
- * Decide Game Winner
- * 
- * 
- */
 
 @SuppressWarnings("serial")
 public class BlackAggieStage extends CustomComponents.Stage {
 	private Card[] UserHand = new Card[13];
 	private Action CardAction;
 	private Card[][] AIHand = new Card[3][13];
-	private Button[] Buttons = new Button[4];
+	private Button[] Buttons = new Button[5];
 	private Boolean InitialSection = true, UserPlayed = false, WaitingForUserPlay = false;
 	private int[][] SelectedLocations = new int[4][3];
 	private Card[][] MovedCards = new Card[4][3];
@@ -37,13 +20,23 @@ public class BlackAggieStage extends CustomComponents.Stage {
 	private Card[] TrickCards = new Card[4];
 	private Text[] ScoreReadout = new Text[4],ScoreLabels = new Text[4];
 	private Panel[] Marker = new Panel[4];
-	private Text LayToSuit;
-	Background AggieBJ = new Background(null);
+	private Text LayToSuit = new Text(),WinText = new Text();
+	private Panel WinPanel = new Panel();
+	private Background AggieBJ = new Background(null);
 	
 	public BlackAggieStage(){
 		ID = 3;
 		
-			
+		WinPanel.setLocation(200,200);
+		WinPanel.setStyle(1);
+		WinPanel.setWidth(400);
+		WinPanel.setHeight(400);
+		WinPanel.setColour(Color.white);
+		
+		WinText.setWidth(200);
+		WinText.setHeight(50);
+		WinText.setLocation(300,350);
+		
 		for(int x = 0;x<4;x++){
 			for(int y=0;y<3;y++){
 				SelectedLocations[x][y]=-1;
@@ -128,12 +121,11 @@ public class BlackAggieStage extends CustomComponents.Stage {
 			}
 			
 		};
-		//TODO
 		TrickCards[0].setLocation(300,300);
 		TrickCards[1].setLocation(500,200);
 		TrickCards[2].setLocation(1000,300);
 		TrickCards[3].setLocation(500,400);
-		for(int x=0;x<4;x++){
+		for(int x=0;x<5;x++){
 			Buttons[x] = new Button();
 		}
 		
@@ -161,26 +153,64 @@ public class BlackAggieStage extends CustomComponents.Stage {
 			
 		}
 
-		Buttons[0].setLocation(1050,675);
-		Buttons[0].setText(10,30,"Re-set");
+		Buttons[0].setLocation(1200,650);
+		Buttons[0].setText(10,30,"Reset");
 		Buttons[0].setAction(new Action(){
 
 			@Override
 			public void run() {
 				System.out.println("resetting game");
-				
+				CardMain.resetDeck();
+				LeadSuit = -1;
+				Lead = 3;
+				InitialSection = true;
+				WaitingForUserPlay = false;
 				for(int y = 0;y<4;y++){
-					for(int x=0;x<13;x++){
-						CardMain.CardOut[y][x] = false;
-					}
+					TrickCards[y].setActive(false);
+					Score[y] = 0;
+					UpdateScoreReadouts();
+					TrickCards[y] = new Card();
+					TrickCards[0].setLocation(300,300);
+					TrickCards[1].setLocation(500,200);
+					TrickCards[2].setLocation(1000,300);
+					TrickCards[3].setLocation(500,400);
+					
 				}
 				
+				for(int x=0;x<13;x++){
+					RemoveItem(UserHand[x]);
+					UserHand[x] = new Card();
+					UserHand[x].setLocation(400+(50*(x-1)), 643);
+					UserHand[x].setAction(CardAction);
+
+					RemoveItem(AIHand[1][x]);
+					AIHand[1][x] = new Card();
+					AIHand[1][x].setLocation(400+(50*(x-1)), 50);
+					AIHand[1][x].setFrontFacing(true);
+
+					RemoveItem(AIHand[2][x]);
+					AIHand[2][x]= new Card();
+					AIHand[2][x].setLocation(1225, 200+(30*(x-1)));
+					AIHand[2][x].setFrontFacing(true);
+					AIHand[2][x].setRotated(true);
+
+					RemoveItem(AIHand[0][x]);
+					AIHand[0][x]= new Card();
+					AIHand[0][x].setLocation(100, 200+(30*(x-1)));
+					AIHand[0][x].setFrontFacing(true);
+					AIHand[0][x].setRotated(true);
+				}
+				Prepare();
+				RemoveItem(Buttons[3]);
+				RemoveItem(WinText);
+				RemoveItem(WinPanel);
+				AddItem(Buttons[2]);
+				System.out.println("ResetFinished");
 			}
-			
 		});
 		
 		this.AddComponent(Buttons[0]);
-		Buttons[1].setLocation(1200, 675);
+		Buttons[1].setLocation(1200, 715);
 		Buttons[1].setText(10, 30, "exit");
 		Buttons[1].setAction(new Action(){
 
@@ -223,37 +253,80 @@ public class BlackAggieStage extends CustomComponents.Stage {
 					TrickCards[x].setActive(false);
 				}
 				if(ActiveInHand(UserHand)!=ActiveInHand(AIHand[0])||ActiveInHand(UserHand)!=ActiveInHand(AIHand[1])||ActiveInHand(UserHand)!=ActiveInHand(AIHand[2])){
-					System.out.println("*******************SOME SHIT HAS GONE WRONG WITH SOMETHING**************");
+					System.out.println("*******************SOMETHING HAS GONE WRONG WITH SOMETHING**************");
 				}
 				if(ActiveInHand(UserHand)==0){
 					System.out.println("finished game");
-				}
+					DecideGameWinner();
+				}else{
 				
-				LeadSuit = -1;
-				switch(Lead){
-				case 0:
-					AIPlay(0);
-					AIPlay(1);
-					AIPlay(2);
-				break;
-				case 1:
-					AIPlay(1);
-					AIPlay(2);
-				break;
-				case 2:
-					AIPlay(2);
-				break;
+					LeadSuit = -1;
+					switch(Lead){
+					case 0:
+						AIPlay(0);
+						AIPlay(1);
+						AIPlay(2);
+					break;
+					case 1:
+						AIPlay(1);
+						AIPlay(2);
+					break;
+					case 2:
+						AIPlay(2);
+					break;
+					}
+					WaitingForUserPlay = true;
 				}
-				WaitingForUserPlay = true;
-				
 			}
 			
 		});
 		
+		Buttons[4].setLocation(1090,680);
+		Buttons[4].setText(10,30,"Back To Menu");
+		Buttons[4].setAction(new Action(){
+			
+			@Override
+			public void run() {
+				Buttons[0].runAction();
+				CardMain.GameLoop.ChangeStage(CardMain.GameLoop.STAGE_MENU);
+			}
+			
+		});
+		AddItem(Buttons[4]);
 	}
 	
 	
 	public void DecideGameWinner(){
+		int i = 0;
+		for(int x=1;x<4;x++){
+			if(Score[x]<Score[i]){
+				i=x;
+			}
+		}
+		switch(i){
+		case 3:
+			System.out.println("User Has Won");
+			WinText.setContent("You Have Won!");
+			WinText.setColour(Color.green);
+		break;
+		case 2:
+			System.out.println("Quazar has won");
+			WinText.setContent("Quazar has annihilated you");
+			WinText.setColour(Color.red);
+		break;
+		case 1:
+			System.out.println("Al has won");
+			WinText.setContent("Al has beat you back to the stone age");
+			WinText.setColour(Color.red);
+		break;
+		case 0:
+			System.out.println("Jimmy has won");
+			WinText.setContent("Jim won");
+			WinText.setColour(Color.red);
+		break;
+		}
+		AddItem(WinPanel);
+		AddItem(WinText);
 		
 	}
 	public void UpdateScoreReadouts(){
@@ -292,10 +365,10 @@ public class BlackAggieStage extends CustomComponents.Stage {
 	}
 	public int DecideTrickWinner(){
 		int i = 0;
-		for(int x=1;x<4;x++){
+		for(int x=0;x<4;x++){
 			if(TrickCards[i].getSuit()!=LeadSuit){
 				i = x;
-			}else if(TrickCards[x].getSuit()==LeadSuit){
+			}if(TrickCards[x].getSuit()==LeadSuit){
 				if(TrickCards[x].getValue()==0){
 					return x;
 				}else{
@@ -437,7 +510,6 @@ public class BlackAggieStage extends CustomComponents.Stage {
 	public void UserPlay(Card SelectedCard){
 		System.out.println("User Play");
 		int TrickScore;
-		int Winner;
 		boolean LegalPlay = true;
 		switch(Lead){
 		case 3:
@@ -461,7 +533,6 @@ public class BlackAggieStage extends CustomComponents.Stage {
 					AIPlay(0);
 					AIPlay(1);
 				}else{
-					//TODO
 					LegalPlay = false;
 					System.out.println("Wrong Suit");
 				}
@@ -486,7 +557,6 @@ public class BlackAggieStage extends CustomComponents.Stage {
 					TrickCards[3].CopyCard(SelectedCard);
 					AIPlay(0);
 				}else{
-					//TODO
 					LegalPlay = false;
 					System.out.println("Wrong Suit");
 				}
@@ -509,7 +579,6 @@ public class BlackAggieStage extends CustomComponents.Stage {
 				if(SelectedCard.getSuit()==LeadSuit){
 					TrickCards[3].CopyCard(SelectedCard);
 				}else{
-					//TODO
 					LegalPlay = false;
 					System.out.println("Wrong Suit");
 				}
@@ -790,7 +859,7 @@ public class BlackAggieStage extends CustomComponents.Stage {
 		int i;
 		Boolean FoundSource = false;
 		Point MouseLocation = MouseArg.getLocationOnScreen();
-		for(i=0;i<4;i++){
+		for(i=0;i<5;i++){
 			if(!FoundSource){
 				//if event took place inside x
 				if(MouseLocation.x>Buttons[i].getXpos()&&MouseLocation.x<Buttons[i].getXpos()+Buttons[i].getWidth()){
