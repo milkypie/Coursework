@@ -62,7 +62,7 @@ public class CardMain{
 	public static BaseJpanel Menu_Button_Base = new BaseJpanel();
 	public static JButton BlackJackButton = new JButton(),CheatButton = new JButton(),TexasButton = new JButton();
 	public static Image[][] Faces = new Image[4][13];
-	public static Image Back;
+	public static Image Back, BackRot;
 	public static File ResourceDir = new File(System.getProperty("user.home")+"\\git\\Coursework\\Resources");
 	public static StageHandler GameLoop;
 	public static JFrame frame = new JFrame("[=] do a card[=]");
@@ -111,6 +111,7 @@ public class CardMain{
 				}
 			}
 			Back = ImageIO.read(new File(ResourceDir+"\\Back.png"));
+			BackRot = ImageIO.read(new File(ResourceDir+"\\Back_Rot.png"));
 			if(testing){
 				System.out.println("found all images");
 			}
@@ -124,6 +125,14 @@ public class CardMain{
 		GameLoop.Start();
 
 
+	}
+	public static void resetDeck(){
+		int x,y;
+		for(x=0;x<4;x++){
+			for(y=0;y<13;y++){
+				CardOut[x][y] = false;
+			}
+		}
 	}
 	public JPanel CreateContentPane(){
 		

@@ -13,7 +13,7 @@ public class Card extends GUIComponent{
 	
 	private Image Face;
 	public int Value,Suit;
-	private boolean FrontFacing = true;
+	private boolean FrontFacing = true, Rotated = false;
 	private Action OnClick;
 	
 	public Card(){
@@ -68,24 +68,30 @@ public class Card extends GUIComponent{
 		 Face = Control.CardMain.Faces[Suit][Value];
 		 Control.CardMain.CardOut[Suit][Value] = true;
 	}
+	public void CopyCard(Card x){
+		Value = x.getValue();
+		Suit = x.getSuit();
+		UpdateFace();
+	}
 	
 	@Override
 	public void Draw(Graphics g) {
 		// x,y,width,height,arcwidth,archeight
-		Graphics2D gg = (Graphics2D) g.create();
 		//creates card image
-		
-		g.setColor(Colour);
-		
-		if(FrontFacing){	
-			g.drawImage(Face, Xpos, Ypos, null);	
-		}else{
+		if(Active){
+			g.setColor(Colour);
 			
-			g.drawImage(Control.CardMain.Back, Xpos, Ypos, null);
+			if(FrontFacing){	
+				g.drawImage(Face, Xpos, Ypos, null);	
+			}else if(Rotated){
+				g.drawImage(Control.CardMain.BackRot, Xpos, Ypos, null);
+			}else{
+				g.drawImage(Control.CardMain.Back, Xpos, Ypos, null);
+			}
 		}
 		
 	}
-	public void updateFace(){
+	public void UpdateFace(){
 		Face = Control.CardMain.Faces[Suit][Value];
 	}
 
@@ -118,7 +124,17 @@ public class Card extends GUIComponent{
 		OnClick.run();
 	}
 	
-	public void RunAction(GUIComponent x){
+	public void RunAction(Card x){
 		OnClick.run(x);
+	}
+
+
+	public boolean isRotated() {
+		return Rotated;
+	}
+
+
+	public void setRotated(boolean rotated) {
+		Rotated = rotated;
 	}
 }

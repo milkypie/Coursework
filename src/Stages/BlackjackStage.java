@@ -22,8 +22,9 @@ public class BlackjackStage extends CustomComponents.Stage{
 	public Button[] Buttons = new Button[7];
 	public int[] Colours = new int[3];
 	public String[] contents = new String[3];
-	public Card[] UserHand = new Card[7],UserSplitHand = new Card[7];
-	public Card[] AIHand = new Card[7], AISplitHand = new Card[7];
+	public static Card[] UserHand = new Card[7];
+	public static Card[] UserSplitHand = new Card[7];
+	public static Card[] AIHand = new Card[7], AISplitHand = new Card[7];
 	public Background BJBackground = new Background(null);
 	public Color BackgroundColour = new Color(0,114,0);
 	private int NextUserCard, NextSplitCard;
@@ -49,9 +50,6 @@ public class BlackjackStage extends CustomComponents.Stage{
 				AIHand[x].setActive(false);
 				UserHand[x].setValue(-1);
 				AIHand[x].setValue(-1);
-			}else{
-				UserHand[x].DealThis();
-				AIHand[x].DealThis();
 			}
 		}
 		//63
@@ -61,8 +59,6 @@ public class BlackjackStage extends CustomComponents.Stage{
 		UserHand[1].setLocation(713, 643);
 		
 		
-		this.AddComponent(UserHand[0]);
-		this.AddComponent(UserHand[1]);
 		
 		NextUserCard=2;
 		NextSplitCard=2;
@@ -70,8 +66,6 @@ public class BlackjackStage extends CustomComponents.Stage{
 		AIHand[0].setLocation(500,50);
 		AIHand[1].setLocation(613,50);
 		
-		this.AddComponent(AIHand[0]);
-		this.AddComponent(AIHand[1]);
 		
 		for(x=0;x<3;x++){
 				Colours[x]=1;
@@ -175,7 +169,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 						UserHasSplit=true;
 						UserSplitHand[0].setValue(UserHand[1].getValue());
 						UserSplitHand[0].setSuit(UserHand[1].getSuit());
-						UserSplitHand[0].updateFace();
+						UserSplitHand[0].UpdateFace();
 						UserHand[1].DealThis();
 						UserSplitHand[1].DealThis();
 						
@@ -199,6 +193,20 @@ public class BlackjackStage extends CustomComponents.Stage{
 		
 		this.AddComponent(Buttons[2]);
 		
+		Buttons[3].setLocation(1050,700);
+		Buttons[3].setText(10,30,"Back To Menu");
+		Buttons[3].setAction(new Action(){
+
+			@Override
+			public void run() {
+				Buttons[5].runAction();
+				Control.CardMain.GameLoop.ChangeStage(StageHandler.STAGE_MENU);
+			}
+			
+		});
+		
+		this.AddComponent(Buttons[3]);
+		
 		Buttons[5].setLocation(1200,600);
 		Buttons[5].setText(10,30,"Re-set");
 		Buttons[5].setAction(new Action(){
@@ -206,11 +214,8 @@ public class BlackjackStage extends CustomComponents.Stage{
 			@Override
 			public void run() {
 				System.out.println("resetting game");
-				for(int x=0;x<4;x++){
-					for(int y=0;y<13;y++){
-						Control.CardMain.CardOut[x][y] = false;
-					}
-				}
+				
+				CardMain.resetDeck();
 				for(int x=0;x<7;x++){
 					AIHand[x].setLocation(500+(113*x), 50);
 					AIHand[x].setFrontFacing(false);
@@ -240,6 +245,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 				CanHit=true;
 				UserHasSplit=false;
 				SplitStuck=false;
+				
 			}
 			
 		});
@@ -432,8 +438,18 @@ public class BlackjackStage extends CustomComponents.Stage{
 
 	@Override
 	public void Prepare() {
-		// TODO Auto-generated method stub
 		
+		CardMain.resetDeck();
+		
+		UserHand[0].DealThis();
+		UserHand[1].DealThis();
+		AIHand[0].DealThis();
+		AIHand[1].DealThis();
+		
+		AddItem(UserHand[0]);
+		AddItem(UserHand[1]);
+		AddItem(AIHand[0]);
+		AddItem(AIHand[1]);
 	}
 
 }

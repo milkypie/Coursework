@@ -9,7 +9,6 @@ public class Text extends GUIComponent{
 
 	private String Content;
 	private Font coverFont;
-	 
 
 
 	public Font getCoverFont() {

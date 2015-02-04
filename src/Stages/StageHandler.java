@@ -18,8 +18,6 @@ public class StageHandler implements Runnable {
 	public static final int STAGE_TEXAS = 2;
 	public static final int STAGE_AGGIE = 3;
 	public static int CurrentStage = 0;
-	private JPanel CurrentView, NextView;
-	private Boolean View;
 	private Thread GameThread;
 	
 	public static CustomComponents.Stage[] StageArray = new CustomComponents.Stage[4];
@@ -67,6 +65,21 @@ public class StageHandler implements Runnable {
 		
 		GameThread.start();
 	}
+	
+	public void ChangeStage(int x){
+		StageArray[x].Prepare();
+		CurrentStage = x;
+	}
+	public void UpdateView(){
+		//refreshes the current stage panel
+		StageArray[CurrentStage].Update();
+		//updateUI will activate the Draw function
+		StageArray[CurrentStage].updateUI();
+		//this completely refreshes totalGUI and removes and mouse listener it had
+		if(CardMain.frame.getContentPane()!=StageArray[CurrentStage]){
+			CardMain.frame.setContentPane(StageArray[CurrentStage]);
+		}
+	}
 
 	public void run() {
 		long startTime = 0;
@@ -74,14 +87,8 @@ public class StageHandler implements Runnable {
 		
 		while(true){
 			startTime = System.nanoTime();
-			//refreshes the current stage panel
-			StageArray[CurrentStage].Update();
-			//updateUI will activate the Draw function
-			StageArray[CurrentStage].updateUI();
-			//this completely refreshes totalGUI and removes and mouse listener it had
-			if(CardMain.frame.getContentPane()!=StageArray[CurrentStage]){
-				CardMain.frame.setContentPane(StageArray[CurrentStage]);
-			}
+			
+			UpdateView();
 			
 			while(System.nanoTime() - startTime <= RATE){
 				try{
