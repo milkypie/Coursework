@@ -29,6 +29,8 @@ public class BlackjackStage extends CustomComponents.Stage{
 	public Color BackgroundColour = new Color(0,114,0);
 	private int NextUserCard, NextSplitCard;
 	public boolean UserHasSplit = false,AIHasSplit = false,CanHit=true,SplitStuck = false;
+	public Card tester = new Card();
+	
 	public BlackjackStage(){
 		ID = 1;
 		
@@ -46,8 +48,6 @@ public class BlackjackStage extends CustomComponents.Stage{
 			UserSplitHand[x].setLocation(600+(113*x), 543);
 			AIHand[x].setFrontFacing(false);
 			if(x>1){
-				UserHand[x].setActive(false);
-				AIHand[x].setActive(false);
 				UserHand[x].setValue(-1);
 				AIHand[x].setValue(-1);
 			}
@@ -108,6 +108,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 							UserHand[NextUserCard].setLocation(713+(113*(NextUserCard-1)),643);
 							AddItem(UserHand[NextUserCard]);
 							NextUserCard++;
+							System.out.println("*****************"+UserHand[NextUserCard-1].Suit+UserHand[NextUserCard-1].Value+"******");
 						}
 						if(ScoreHand(UserHand)==0){
 							Buttons[1].runAction();
@@ -348,6 +349,7 @@ public class BlackjackStage extends CustomComponents.Stage{
 			WinnerText.setColour(Color.BLUE);
 			WinnerText.setContent("You Draw");
 		}
+		RemoveItem(WinnerText);
 		AddItem(WinnerText);
 		System.out.println("===========");
 		System.out.println("ai scored: "+AIHighestScore+"\n User scored"+UserHighestScore);
@@ -358,39 +360,28 @@ public class BlackjackStage extends CustomComponents.Stage{
 	public int ScoreHand(Card[] Hand){
 		int Score=0;
 		int Aces =0;
-		System.out.println("---------------");
-		System.out.println(Hand[0].Value);
-		System.out.println(Hand[1].Value);
-		System.out.println(Hand[2].Value);
-		System.out.println(Hand[3].Value);
-		System.out.println("================");
 		for(int x=0;x<Hand.length;x++){
 			//-1 is the default value for undealt cards
 			if(Hand[x].getValue()!=-1){
 				switch(Hand[x].getValue()){
 				case 0:
 					//Ace
-					System.out.println("found an ace");
 					Score=Score+11;
 					Aces++;
 				break;
 				case 10:
 					//Jack
-					System.out.println("found a jack");
 					Score = Score+10;				
 				break;
 				case 11:
 					//Queen
-					System.out.println("found a queen");
 					Score=Score+10;
 				break;
 				case 12:
 					//King
-					System.out.println("found a king");
 					Score=Score+10;
 				break;
 				default:
-					System.out.println("found a "+(Hand[x].getValue()+1));
 					Score = Score + Hand[x].getValue()+1;
 				break;
 				}

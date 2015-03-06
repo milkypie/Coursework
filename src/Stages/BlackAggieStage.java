@@ -69,16 +69,16 @@ public class BlackAggieStage extends CustomComponents.Stage {
 		AddItem(ScoreLabels[3]);
 		
 		ScoreReadout[0].setContent(String.valueOf(Score[0]));
-		ScoreReadout[0].setLocaiton(770, 300);
+		ScoreReadout[0].setLocation(770, 300);
 		ScoreReadout[0].setColour(Color.RED);
 		ScoreReadout[1].setContent(String.valueOf(Score[1]));
-		ScoreReadout[1].setLocaiton(750, 340);
+		ScoreReadout[1].setLocation(750, 340);
 		ScoreReadout[1].setColour(Color.BLUE);
 		ScoreReadout[2].setContent(String.valueOf(Score[2]));
-		ScoreReadout[2].setLocaiton(830, 380);
+		ScoreReadout[2].setLocation(830, 380);
 		ScoreReadout[2].setColour(Color.PINK);
 		ScoreReadout[3].setContent(String.valueOf(Score[3]));
-		ScoreReadout[3].setLocaiton(720, 420);
+		ScoreReadout[3].setLocation(720, 420);
 		ScoreReadout[3].setColour(Color.YELLOW);
 		
 		AddItem(ScoreReadout[0]);
@@ -92,7 +92,7 @@ public class BlackAggieStage extends CustomComponents.Stage {
 		Marker[1].setLocation(500,10);
 		Marker[1].setDimensions(50,30);
 		Marker[1].setColour(Color.BLUE);
-		Marker[2].setLocation(1300,300);
+		Marker[2].setLocation(1330,300);
 		Marker[2].setDimensions(30,50);
 		Marker[2].setColour(Color.PINK);
 		Marker[3].setLocation(500,750);
@@ -115,6 +115,7 @@ public class BlackAggieStage extends CustomComponents.Stage {
 							x.setLocation(x.getXpos(),643);
 						}
 					if(WaitingForUserPlay){
+						WaitingForUserPlay = false;
 						UserPlay(x);
 					}
 				}
@@ -750,7 +751,7 @@ public class BlackAggieStage extends CustomComponents.Stage {
 						Value--;
 					break;
 					default:
-						System.out.println("*********ERROR: BLACKAGGIESTAGE LINE 189****************");
+						System.out.println("*********ERROR:****************");
 					break;
 					}
 				}

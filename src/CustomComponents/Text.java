@@ -34,13 +34,17 @@ public class Text extends GUIComponent{
 
 	public void Draw(Graphics g) {
 		g.setColor(Colour);
+		Font OldFont = g.getFont();
+		if(coverFont!=null){
+			g.setFont(coverFont);
+		}
 		if(Content!=null){
 			g.drawString(Content, Xpos, Ypos);
 		}else{
 			System.out.println("///"+"Content has not been properly initialized"+"\\\n ");
 			
 		}
-		
+		g.setFont(OldFont);
 	}
 	
 }
