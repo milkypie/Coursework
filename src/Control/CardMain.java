@@ -12,8 +12,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import Stages.StageHandler;
-import Visuals.BaseJpanel;
-import Visuals.FrameHandler;
 import Input.MouseInput;
 
 /*
@@ -30,40 +28,21 @@ import Input.MouseInput;
  * [Fixed] by removing TotalGUI from the update sequence and simply calling setContentPane() on the base frame and using a
  * value in Stage array to pass through 
  * 
- * BlackJack:
- * 
- * BASIC:
- * -Build Stage
- * -Initial Deal
- * 
- * FUNCTONS:
- * -Hit
- * -Stick
- * -Split
- * -Re-Deal
- * 
- * ALGORITHMS:
- * -AI
- * -Win/lose
- * 
  */
 
 public class CardMain{
-	public static boolean testing = true; //needs to be false when released
+	public static boolean testing = false; //needs to be false when released
 	static Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static int ScreenWidth = ScreenSize.width ;
 	public static MouseInput MouseHandler = new MouseInput();
 	public static int ScreenHeight = ScreenSize.height;
 	public static JPanel TotalGUI = new JPanel(),MousePanel = new JPanel();
 	public static Boolean[][] CardOut = new Boolean[4][13];
-	public FrameHandler[] Hand = new FrameHandler[30];
 	static final int DiamondID = 0, SpadeID = 1, HeartID = 2, ClubID = 3;
-	public static Point[][] PictureSet = new Point[9][10]; 
-	public static BaseJpanel Menu_Button_Base = new BaseJpanel();
 	public static JButton BlackJackButton = new JButton(),CheatButton = new JButton(),TexasButton = new JButton();
 	public static Image[][] Faces = new Image[4][13];
 	public static Image Back, BackRot;
-	public static File ResourceDir = new File(System.getProperty("user.home")+"\\git\\Coursework\\Resources");
+	public static File ResourceDir = new File("Resources");
 	public static StageHandler GameLoop;
 	public static JFrame frame = new JFrame("[=] do a card[=]");
 	

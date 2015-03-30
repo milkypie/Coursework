@@ -1,13 +1,7 @@
 package CustomComponents;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-
-import javax.imageio.ImageIO;
-
-import Control.CardMain;
 
 public class Card extends GUIComponent{
 	

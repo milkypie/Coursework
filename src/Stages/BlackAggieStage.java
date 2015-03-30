@@ -3,8 +3,15 @@ package Stages;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+
 import Control.CardMain;
-import CustomComponents.*;
+import CustomComponents.Card;
+import CustomComponents.Action;
+import CustomComponents.Button;
+import CustomComponents.Text;
+import CustomComponents.Panel;
+import CustomComponents.Background;
+import CustomComponents.GUIComponent;
 
 @SuppressWarnings("serial")
 public class BlackAggieStage extends CustomComponents.Stage {
@@ -26,16 +33,17 @@ public class BlackAggieStage extends CustomComponents.Stage {
 	
 	public BlackAggieStage(){
 		ID = 3;
-		
+		//initialisation of win panel
 		WinPanel.setLocation(200,200);
 		WinPanel.setStyle(1);
 		WinPanel.setWidth(400);
 		WinPanel.setHeight(400);
 		WinPanel.setColour(Color.white);
-		
+		//initialisation of win text
 		WinText.setWidth(200);
 		WinText.setHeight(50);
 		WinText.setLocation(300,350);
+		
 		
 		for(int x = 0;x<4;x++){
 			for(int y=0;y<3;y++){
@@ -536,6 +544,7 @@ public class BlackAggieStage extends CustomComponents.Stage {
 				}else{
 					LegalPlay = false;
 					System.out.println("Wrong Suit");
+					WaitingForUserPlay = true;
 				}
 			}else{
 				System.out.println("2: User can't Lay to suit");
@@ -560,6 +569,7 @@ public class BlackAggieStage extends CustomComponents.Stage {
 				}else{
 					LegalPlay = false;
 					System.out.println("Wrong Suit");
+					WaitingForUserPlay = true;
 				}
 			}else{
 				System.out.println("1: User can't Lay to suit");
@@ -582,6 +592,7 @@ public class BlackAggieStage extends CustomComponents.Stage {
 				}else{
 					LegalPlay = false;
 					System.out.println("Wrong Suit");
+					WaitingForUserPlay = true;
 				}
 			}else{
 				System.out.println("1: User can't Lay to suit");

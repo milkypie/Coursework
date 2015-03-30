@@ -8,9 +8,6 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import Control.CardMain;
-import Visuals.BaseJpanel;
-
 @SuppressWarnings("serial")
 public abstract class Stage extends JPanel{
 	

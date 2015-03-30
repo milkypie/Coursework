@@ -5,7 +5,12 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 
 import Control.CardMain;
-import CustomComponents.*;
+import CustomComponents.Card;
+import CustomComponents.GUIComponent;
+import CustomComponents.Button;
+import CustomComponents.Text;
+import CustomComponents.Background;
+import CustomComponents.Action;
 
 /*
  * TODO
@@ -193,6 +198,8 @@ public class TexasStage extends CustomComponents.Stage {
 			public void run() {
 				Control.CardMain.resetDeck();
 				for(int x = 0;x<4;x++){
+					Hand[x][0].setActive(true);
+					Hand[x][1].setActive(true);
 					Hand[x][0].DealThis();
 					Hand[x][0].Update();
 					Hand[x][1].DealThis();
@@ -200,6 +207,8 @@ public class TexasStage extends CustomComponents.Stage {
 					MoneyLeft[x] = 1000;
 					Pot = 0;
 					LastBet  = 0;
+					GameStage=0;
+					RaisesThisRound=0;
 					RemoveItem(TableCard[x]);
 					StillIn[x] = true;
 				}
@@ -796,8 +805,10 @@ public class TexasStage extends CustomComponents.Stage {
 			System.out.println(PlayingHand+ " AI has folded");
 		}
 		StillIn[PlayingHand] = false;
-		RemoveItem(Hand[PlayingHand][0]);
-		RemoveItem(Hand[PlayingHand][1]);
+		//RemoveItem(Hand[PlayingHand][0]);
+		//RemoveItem(Hand[PlayingHand][1]);
+		Hand[PlayingHand][0].setActive(false);
+		Hand[PlayingHand][1].setActive(false);
 	}
 	private void AddItem(GUIComponent x) {
 		this.AddComponent(x);

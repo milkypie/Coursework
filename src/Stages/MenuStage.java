@@ -2,24 +2,17 @@ package Stages;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import CustomComponents.Action;
 import CustomComponents.Background;
 import CustomComponents.Button;
-import CustomComponents.Card;
 
 @SuppressWarnings("serial")
 public class MenuStage extends CustomComponents.Stage {

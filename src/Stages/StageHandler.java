@@ -1,12 +1,6 @@
 package Stages;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.concurrent.TimeUnit;
-
-import javax.swing.JPanel;
 
 import Control.CardMain;
 
@@ -49,7 +43,7 @@ public class StageHandler implements Runnable {
 			StageArray[2] = new TexasStage();
 		break;
 		case 3:
-			StageArray[3] = new CheatStage();
+			StageArray[3] = new BlackAggieStage();
 		break;
 		default:
 			System.out.println("that number does not reffer to a stage");

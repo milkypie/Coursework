@@ -7,13 +7,15 @@ import java.awt.event.MouseListener;
 
 public class Button extends GUIComponent implements MouseListener{
 
+
+	private int Style = 1;
+	
 	//text stuff
 	public Action action;
 	private Text Text = new Text();
 	private int TextX = 0 ,TextY = 0,TextWidth = 80,TextHeight = 30;
 	private Color TextColour = Color.RED;
 	private String Content = "";
-	private int Style = 1;
 	
 	public Button(){
 		this.width = 100;
